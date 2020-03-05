@@ -1,0 +1,372 @@
+[
+    {
+        "id": "2f1f4507.0a27ba",
+        "type": "tab",
+        "label": "API Simple",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8bbb487a.1972e8",
+        "type": "inject",
+        "z": "2f1f4507.0a27ba",
+        "name": "make request",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 170,
+        "y": 60,
+        "wires": [
+            [
+                "b82166cc.dfe7b8"
+            ]
+        ]
+    },
+    {
+        "id": "b82166cc.dfe7b8",
+        "type": "http request",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://nodered.org",
+        "tls": "",
+        "x": 334.5,
+        "y": 60,
+        "wires": [
+            [
+                "3308eafb.9ce476",
+                "84b34b39.080bf8"
+            ]
+        ]
+    },
+    {
+        "id": "f64e5d8b.b2875",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3308eafb.9ce476",
+        "type": "html",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "property": "",
+        "outproperty": "",
+        "tag": ".node-red-latest-version",
+        "ret": "text",
+        "as": "single",
+        "x": 570,
+        "y": 60,
+        "wires": [
+            [
+                "f64e5d8b.b2875"
+            ]
+        ]
+    },
+    {
+        "id": "84b34b39.080bf8",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 480,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "17da78c7.fa2487",
+        "type": "http request",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 510,
+        "y": 320,
+        "wires": [
+            [
+                "5aa9dd48.ab7a84"
+            ]
+        ]
+    },
+    {
+        "id": "6af98bd9.904194",
+        "type": "inject",
+        "z": "2f1f4507.0a27ba",
+        "name": "cars on craigslist",
+        "topic": "",
+        "payload": "http://vancouver.craigslist.org/search/sss?format=rss&query=cars",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "94533bd3.4d9948"
+            ]
+        ]
+    },
+    {
+        "id": "94533bd3.4d9948",
+        "type": "change",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 320,
+        "wires": [
+            [
+                "17da78c7.fa2487",
+                "95477af7.bf7778"
+            ]
+        ]
+    },
+    {
+        "id": "5aa9dd48.ab7a84",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 690,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "95477af7.bf7778",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 500,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "83b932cf.26979",
+        "type": "http request",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://jsonplaceholder.typicode.com/posts/{{post}}",
+        "tls": "",
+        "x": 430,
+        "y": 540,
+        "wires": [
+            [
+                "dec9effd.4ef08"
+            ]
+        ]
+    },
+    {
+        "id": "dec9effd.4ef08",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 590,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5b24940d.4daacc",
+        "type": "inject",
+        "z": "2f1f4507.0a27ba",
+        "name": "post id",
+        "topic": "",
+        "payload": "2",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "303ed56c.779a1a"
+            ]
+        ]
+    },
+    {
+        "id": "303ed56c.779a1a",
+        "type": "change",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "post",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 540,
+        "wires": [
+            [
+                "83b932cf.26979"
+            ]
+        ]
+    },
+    {
+        "id": "18978709.542a89",
+        "type": "http request",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://query.yahooapis.com/v1/public/yql?q={{{query}}}&format=json",
+        "tls": "",
+        "x": 490,
+        "y": 680,
+        "wires": [
+            [
+                "f7d462da.2f5a5"
+            ]
+        ]
+    },
+    {
+        "id": "f7d462da.2f5a5",
+        "type": "debug",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 650,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "fe7be0.7ad4a42",
+        "type": "inject",
+        "z": "2f1f4507.0a27ba",
+        "name": "query parameter",
+        "topic": "",
+        "payload": "select astronomy.sunset from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"maui, hi\")",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 140,
+        "y": 680,
+        "wires": [
+            [
+                "6d37f734.cdf348"
+            ]
+        ]
+    },
+    {
+        "id": "6d37f734.cdf348",
+        "type": "change",
+        "z": "2f1f4507.0a27ba",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 680,
+        "wires": [
+            [
+                "18978709.542a89"
+            ]
+        ]
+    },
+    {
+        "id": "bd32d478.505a68",
+        "type": "comment",
+        "z": "2f1f4507.0a27ba",
+        "name": "Simple GET request",
+        "info": "",
+        "x": 170,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b88bcb49.f33198",
+        "type": "comment",
+        "z": "2f1f4507.0a27ba",
+        "name": "Set the url of a request",
+        "info": "",
+        "x": 160,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6470c6ec.8f4c78",
+        "type": "comment",
+        "z": "2f1f4507.0a27ba",
+        "name": "Set the url of a request using a template",
+        "info": "",
+        "x": 210,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "ba89c8d3.721fc8",
+        "type": "comment",
+        "z": "2f1f4507.0a27ba",
+        "name": "Set query string parameters",
+        "info": "",
+        "x": 180,
+        "y": 780,
+        "wires": []
+    }
+]

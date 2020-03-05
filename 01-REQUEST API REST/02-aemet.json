@@ -1,0 +1,255 @@
+[
+    {
+        "id": "2eb373d0.c952fc",
+        "type": "tab",
+        "label": "API Aemet",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8deb4c14.ee2b1",
+        "type": "inject",
+        "z": "2eb373d0.c952fc",
+        "name": "api key",
+        "topic": "",
+        "payload": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZWNyZXNwb21AZ21haWwuY29tIiwianRpIjoiMjUyYjk2OTAtNzI1Yi00OTEzLTlkYmEtZTczMjY0ZDg5OTUzIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE1ODMyMjk5MDUsInVzZXJJZCI6IjI1MmI5NjkwLTcyNWItNDkxMy05ZGJhLWU3MzI2NGQ4OTk1MyIsInJvbGUiOiIifQ.gMxjlUTd7CM3fc3F0_lAXXGnrDyFAB-GBSEpD6CLetA",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "fc6e73f3.061c",
+                "a912e1f0.09fdc"
+            ]
+        ]
+    },
+    {
+        "id": "a74a0102.7fb14",
+        "type": "http request",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://opendata.aemet.es/opendata/api/valores/climatologicos/inventarioestaciones/todasestaciones/?api_key={{apikey}}",
+        "tls": "",
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "a2a53510.6635b8",
+                "3974527e.01031e"
+            ]
+        ]
+    },
+    {
+        "id": "a2a53510.6635b8",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fc6e73f3.061c",
+        "type": "change",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "a74a0102.7fb14"
+            ]
+        ]
+    },
+    {
+        "id": "a912e1f0.09fdc",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 320,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "aefb8bf7.5f6b68",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 330,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "3974527e.01031e",
+        "type": "json",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "aefb8bf7.5f6b68",
+                "f010cb75.e9b9f8",
+                "9fd8484.0bef3b8"
+            ]
+        ]
+    },
+    {
+        "id": "871d8021.9d074",
+        "type": "http request",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://opendata.aemet.es/opendata/sh/{{payload}}",
+        "tls": "",
+        "x": 630,
+        "y": 400,
+        "wires": [
+            [
+                "9dfe4d9c.25485"
+            ]
+        ]
+    },
+    {
+        "id": "d70246d3.0094e8",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 580,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9dfe4d9c.25485",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f010cb75.e9b9f8",
+        "type": "function",
+        "z": "2eb373d0.c952fc",
+        "name": "Extrae Valor",
+        "func": "var url = msg.payload.datos;\n\nvar newMsg = { payload: url.substring(url.length - 8, url.length)};\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "871d8021.9d074",
+                "d70246d3.0094e8"
+            ]
+        ]
+    },
+    {
+        "id": "9fd8484.0bef3b8",
+        "type": "change",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload.datos",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 640,
+        "wires": [
+            [
+                "767c9b41.5514e4"
+            ]
+        ]
+    },
+    {
+        "id": "767c9b41.5514e4",
+        "type": "http request",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 630,
+        "y": 640,
+        "wires": [
+            [
+                "e1c54a83.819008"
+            ]
+        ]
+    },
+    {
+        "id": "e1c54a83.819008",
+        "type": "debug",
+        "z": "2eb373d0.c952fc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 800,
+        "y": 720,
+        "wires": []
+    }
+]
