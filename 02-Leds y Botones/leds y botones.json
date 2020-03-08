@@ -1,0 +1,269 @@
+[
+    {
+        "id": "f73404b5.bf7fc8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "97ce1451.e66108",
+        "type": "rpi-gpio in",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "pin": "13",
+        "intype": "down",
+        "debounce": "25",
+        "read": false,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "39684092.99031",
+                "ee93f378.ee724"
+            ]
+        ]
+    },
+    {
+        "id": "11e42087.4a1bef",
+        "type": "rpi-gpio out",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "pin": "12",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 720,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "39684092.99031",
+        "type": "debug",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 500,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5294057c.34d62c",
+        "type": "mqtt in",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "topic": "/raspberrypi/led",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "4648cbb2.79e214",
+                "3dcf4a33.7d9bf6"
+            ]
+        ]
+    },
+    {
+        "id": "ee93f378.ee724",
+        "type": "mqtt out",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "topic": "/raspberrypi/boton",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 540,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4648cbb2.79e214",
+        "type": "debug",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "3dcf4a33.7d9bf6",
+        "type": "change",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "ON",
+                "fromt": "str",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "OFF",
+                "fromt": "str",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "11e42087.4a1bef",
+                "afaa6050.3fc22"
+            ]
+        ]
+    },
+    {
+        "id": "5192fb6d.80ea04",
+        "type": "rbe",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "c3bbaa78.1cd3d8",
+                "7462d74d.b42538"
+            ]
+        ]
+    },
+    {
+        "id": "3be66df4.960d32",
+        "type": "mqtt in",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "topic": "/raspberrypi/boton",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 180,
+        "y": 480,
+        "wires": [
+            [
+                "5192fb6d.80ea04"
+            ]
+        ]
+    },
+    {
+        "id": "cd546aed.858b98",
+        "type": "mqtt out",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "topic": "/raspberrypi/led",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 760,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c3bbaa78.1cd3d8",
+        "type": "debug",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 590,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "afaa6050.3fc22",
+        "type": "debug",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7462d74d.b42538",
+        "type": "function",
+        "z": "f73404b5.bf7fc8",
+        "name": "detecta flanco",
+        "func": "var estado_led = flow.get(\"estado_led_anterior\");\nvar led = flow.get(\"led\");\n\nif (estado_led != msg.payload){\n    flow.set(\"estado_led_anterior\", msg.payload);\n    if (msg.payload == 'ON'){    //flanco ascendente\n        if (led == 'ON') {\n            led = 'OFF';\n        }\n        else {\n            led = 'ON';\n        }\n        flow.set(\"led\",led);\n        msg.payload = led;\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 480,
+        "wires": [
+            [
+                "cd546aed.858b98",
+                "85b1156d.8dda48"
+            ]
+        ]
+    },
+    {
+        "id": "85b1156d.8dda48",
+        "type": "debug",
+        "z": "f73404b5.bf7fc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 800,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "760437d5.268b98",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
