@@ -10,9 +10,9 @@
 
 // Update these with values suitable for your network.
 
-const char* ssid = "........";
-const char* password = "........";
-const char* mqtt_server = "broker.mqtt-dashboard.com";
+const char* ssid = "......";
+const char* password = ".......";
+const char* mqtt_server = "........";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -123,10 +123,10 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
-    String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
+    //String clientId = "ESP8266Client-";
+    //clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str())) {
+    if (client.connect("wemosd1mini....",".......","......")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
