@@ -1,0 +1,144 @@
+[
+    {
+        "id": "58d97318.13066c",
+        "type": "tab",
+        "label": "blink",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "820afab2.7dbd08",
+        "type": "debug",
+        "z": "58d97318.13066c",
+        "name": "",
+        "active": true,
+        "x": 600,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c86ce1c9.cbfdc",
+        "type": "trigger",
+        "z": "58d97318.13066c",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "500",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 360,
+        "y": 260,
+        "wires": [
+            [
+                "820afab2.7dbd08"
+            ]
+        ]
+    },
+    {
+        "id": "d9f833fe.7fe82",
+        "type": "inject",
+        "z": "58d97318.13066c",
+        "name": "tick",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "c86ce1c9.cbfdc"
+            ]
+        ]
+    },
+    {
+        "id": "b447d381.49a93",
+        "type": "function",
+        "z": "58d97318.13066c",
+        "name": "startBlink",
+        "func": "var BLINKDELAY = 250;\n\nvar light = true;\n\n\nvar blinker = setInterval(blink, BLINKDELAY);\n\nglobal.set(\"blinker\", blinker);\n\nfunction blink () {\n    \n    if (light) {\n        msg.payload = 1;\n        light = false;\n    }\n    \n    else {\n        msg.payload = 0;\n        light = true;\n    }\n    \n    node.send(msg);\n}\n\n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 460,
+        "wires": [
+            [
+                "45bd9fad.8795b"
+            ]
+        ]
+    },
+    {
+        "id": "f83e987.8281868",
+        "type": "inject",
+        "z": "58d97318.13066c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 164,
+        "y": 460,
+        "wires": [
+            [
+                "b447d381.49a93"
+            ]
+        ]
+    },
+    {
+        "id": "45bd9fad.8795b",
+        "type": "rpi-gpio out",
+        "z": "58d97318.13066c",
+        "name": "",
+        "pin": "15",
+        "set": "",
+        "level": "0",
+        "out": "out",
+        "x": 509,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f81ad4b6.c9f8a8",
+        "type": "function",
+        "z": "58d97318.13066c",
+        "name": "stopBlink",
+        "func": "clearInterval(global.get(\"blinker\"));\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 326,
+        "y": 532,
+        "wires": [
+            [
+                "45bd9fad.8795b"
+            ]
+        ]
+    },
+    {
+        "id": "c8da12eb.31342",
+        "type": "inject",
+        "z": "58d97318.13066c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 161,
+        "y": 533,
+        "wires": [
+            [
+                "f81ad4b6.c9f8a8"
+            ]
+        ]
+    }
+]
