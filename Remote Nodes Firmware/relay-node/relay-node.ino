@@ -88,9 +88,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (String(topic) == String(subs_rele)) {
     // Switch on the LED if an 1 was received as first character
     if ((char)payload[0] == '1') {
-      digitalWrite(BUILTIN_LED, HIGH);   // Turn the Relay on 
+      digitalWrite(relayPin, HIGH);   // Turn the Relay on 
     } else {
-      digitalWrite(BUILTIN_LED, LOW);  // Turn the Relay off
+      digitalWrite(relayPin, LOW);  // Turn the Relay off
     }
   }
 }
