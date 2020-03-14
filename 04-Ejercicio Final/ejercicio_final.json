@@ -1,0 +1,1845 @@
+[
+    {
+        "id": "5769be00.0fe0a4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "9b443ab0.404b48",
+        "type": "tab",
+        "label": "API Aemet",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "b82ba0fd.0023f",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "f3591079.b3ed7",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "a132673b.c53118",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "1cf3d19.56a4c2e",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5bd77a75.88e8b4",
+        "type": "tab",
+        "label": "Raspberry Pi",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "db952fb2.2f936",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3b5ee8e1.fe59b8",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": [
+                    {
+                        "id": "7e703.93f308fd8"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 680,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "ed7ee74.e937818",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 680,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "22ba07c6.665bb8",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 520,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "af7a3dc0.35b55",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 580,
+                "y": 440,
+                "wires": [
+                    {
+                        "id": "b6f28db.347b27",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "hola",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "4922f4b9.acd6bc",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "RPi Enrique",
+        "broker": "192.168.6.85",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "7cea979e.399c18",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "RPi Ricardo",
+        "broker": "192.168.6.78",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "fdb21d11.727f",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "14e6d1b1.c1cc6e",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "mqttcloud",
+        "broker": "m20.cloudmqtt.com",
+        "port": "10488",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "a5899ca6.7de53",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "cff3fa60.8f6e58",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Datos M5stick",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c58ee415.38ce38",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Nodo14",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "de6eadd6.a14af",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "cff3fa60.8f6e58",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "ce383b25.1bb8e8",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "c58ee415.38ce38",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "c66daa8f.5529d8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "192.168.6.75",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "7eac7625.7f9fc8",
+        "type": "ui_group",
+        "name": "Group 2",
+        "tab": "c58ee415.38ce38",
+        "order": 2,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "8170cb57.bcb668",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "7eac7625.7f9fc8",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "eb6b3921.fc5bb8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "RPi Enrique",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "2bf9d26f.1ad00e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Led RPi",
+        "tab": "eb6b3921.fc5bb8",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "d5939dc.2da056",
+        "type": "rpi-gpio out",
+        "z": "3b5ee8e1.fe59b8",
+        "name": "",
+        "pin": "12",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 620,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "22ba07c6.665bb8",
+        "type": "trigger",
+        "z": "3b5ee8e1.fe59b8",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "500",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 400,
+        "y": 180,
+        "wires": [
+            [
+                "d5939dc.2da056",
+                "7e703.93f308fd8"
+            ]
+        ]
+    },
+    {
+        "id": "af7a3dc0.35b55",
+        "type": "inject",
+        "z": "3b5ee8e1.fe59b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "22ba07c6.665bb8"
+            ]
+        ]
+    },
+    {
+        "id": "e9eafa5.c4f8108",
+        "type": "rpi-gpio in",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "pin": "16",
+        "intype": "down",
+        "debounce": "25",
+        "read": false,
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "2eabd1bd.9d187e",
+                "3b9b5798.b8fae8"
+            ]
+        ]
+    },
+    {
+        "id": "2eabd1bd.9d187e",
+        "type": "debug",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 500,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e5a5c4c2.6d1438",
+        "type": "inject",
+        "z": "9b443ab0.404b48",
+        "name": "api key",
+        "topic": "",
+        "payload": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZWNyZXNwb21AZ21haWwuY29tIiwianRpIjoiMjUyYjk2OTAtNzI1Yi00OTEzLTlkYmEtZTczMjY0ZDg5OTUzIiwiaXNzIjoiQUVNRVQiLCJpYXQiOjE1ODMyMjk5MDUsInVzZXJJZCI6IjI1MmI5NjkwLTcyNWItNDkxMy05ZGJhLWU3MzI2NGQ4OTk1MyIsInJvbGUiOiIifQ.gMxjlUTd7CM3fc3F0_lAXXGnrDyFAB-GBSEpD6CLetA",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "f549d2b.f50943",
+                "337037ce.74b958"
+            ]
+        ]
+    },
+    {
+        "id": "40262a7e.4fb084",
+        "type": "http request",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://opendata.aemet.es/opendata/api/valores/climatologicos/inventarioestaciones/todasestaciones/?api_key={{apikey}}",
+        "tls": "",
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "daf0d4ff.0be048",
+                "5c836491.5adaac"
+            ]
+        ]
+    },
+    {
+        "id": "daf0d4ff.0be048",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f549d2b.f50943",
+        "type": "change",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "apikey",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "40262a7e.4fb084"
+            ]
+        ]
+    },
+    {
+        "id": "337037ce.74b958",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 320,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "27a8f637.f0dc9a",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 330,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5c836491.5adaac",
+        "type": "json",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "27a8f637.f0dc9a",
+                "166431b9.171b4e",
+                "deb98851.f78778"
+            ]
+        ]
+    },
+    {
+        "id": "ebc3e721.e4cc18",
+        "type": "http request",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "https://opendata.aemet.es/opendata/sh/{{payload}}",
+        "tls": "",
+        "x": 630,
+        "y": 400,
+        "wires": [
+            [
+                "e036e243.82a24"
+            ]
+        ]
+    },
+    {
+        "id": "2a44093a.df5e16",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 580,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "e036e243.82a24",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "166431b9.171b4e",
+        "type": "function",
+        "z": "9b443ab0.404b48",
+        "name": "Extrae Valor",
+        "func": "var url = msg.payload.datos;\n\nvar newMsg = { payload: url.substring(url.length - 8, url.length)};\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "ebc3e721.e4cc18",
+                "2a44093a.df5e16"
+            ]
+        ]
+    },
+    {
+        "id": "deb98851.f78778",
+        "type": "change",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload.datos",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 640,
+        "wires": [
+            [
+                "21c1dfd3.1642e"
+            ]
+        ]
+    },
+    {
+        "id": "21c1dfd3.1642e",
+        "type": "http request",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 630,
+        "y": 640,
+        "wires": [
+            [
+                "9ab03ccb.f579b"
+            ]
+        ]
+    },
+    {
+        "id": "9ab03ccb.f579b",
+        "type": "debug",
+        "z": "9b443ab0.404b48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 800,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "e4c24c77.3bab1",
+        "type": "mqtt in",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "/boton",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "abc37f24.095f5",
+                "d31e60ac.b4294"
+            ]
+        ]
+    },
+    {
+        "id": "abc37f24.095f5",
+        "type": "debug",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 500,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7e703.93f308fd8",
+        "type": "mqtt out",
+        "z": "3b5ee8e1.fe59b8",
+        "name": "",
+        "topic": "/led",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 610,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3b9b5798.b8fae8",
+        "type": "mqtt out",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "/boton",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 400,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d31e60ac.b4294",
+        "type": "mqtt out",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "boton",
+        "qos": "",
+        "retain": "",
+        "broker": "7cea979e.399c18",
+        "x": 330,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ed7ee74.e937818",
+        "type": "mqtt in",
+        "z": "3b5ee8e1.fe59b8",
+        "name": "",
+        "topic": "/led",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "d5939dc.2da056"
+            ]
+        ]
+    },
+    {
+        "id": "b6f28db.347b27",
+        "type": "inject",
+        "z": "3b5ee8e1.fe59b8",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "d5939dc.2da056"
+            ]
+        ]
+    },
+    {
+        "id": "ee4ac082.68038",
+        "type": "mqtt in",
+        "z": "b82ba0fd.0023f",
+        "name": "",
+        "topic": "sensors/#",
+        "qos": "2",
+        "broker": "fdb21d11.727f",
+        "x": 300,
+        "y": 200,
+        "wires": [
+            [
+                "5c444fa8.53646"
+            ]
+        ]
+    },
+    {
+        "id": "70d6a6c6.ec0e78",
+        "type": "debug",
+        "z": "b82ba0fd.0023f",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 570,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "65992df6.a47094",
+        "type": "mqtt out",
+        "z": "b82ba0fd.0023f",
+        "name": "",
+        "topic": "sensors/livingroom/temp",
+        "qos": "",
+        "retain": "false",
+        "broker": "fdb21d11.727f",
+        "x": 350,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ea0af1fe.a0d5f",
+        "type": "inject",
+        "z": "b82ba0fd.0023f",
+        "name": "temp json",
+        "topic": "",
+        "payload": "{\"sensor_id\":1234,\"temperature\":13}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "65992df6.a47094"
+            ]
+        ]
+    },
+    {
+        "id": "5c444fa8.53646",
+        "type": "json",
+        "z": "b82ba0fd.0023f",
+        "name": "",
+        "pretty": false,
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "70d6a6c6.ec0e78"
+            ]
+        ]
+    },
+    {
+        "id": "5c3a6170.3f3bc",
+        "type": "inject",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "nodo1/led",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "6cf393b2.b424fc"
+            ]
+        ]
+    },
+    {
+        "id": "6cf393b2.b424fc",
+        "type": "mqtt out",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "nodo1/led",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 460,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "26e25c27.a7c314",
+        "type": "inject",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "topic": "nodo1/led",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 700,
+        "wires": [
+            [
+                "6cf393b2.b424fc"
+            ]
+        ]
+    },
+    {
+        "id": "68bd6f1c.fbee4",
+        "type": "mqtt in",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "topic": "m5stack/temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "14e6d1b1.c1cc6e",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "5fe665bd.0d0e2c",
+                "410302ff.67a83c"
+            ]
+        ]
+    },
+    {
+        "id": "bc217b33.f3fe38",
+        "type": "debug",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5fe665bd.0d0e2c",
+        "type": "mqtt out",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 480,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a5abda5a.7ab968",
+        "type": "mqtt in",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "499702d0.e2928c"
+            ]
+        ]
+    },
+    {
+        "id": "499702d0.e2928c",
+        "type": "debug",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 520,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3b9d435b.fd953c",
+        "type": "mqtt in",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "topic": "Image",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "14e6d1b1.c1cc6e",
+        "x": 160,
+        "y": 300,
+        "wires": [
+            [
+                "43cbb374.e675cc",
+                "a65b5a5.b2b57a8",
+                "5fe665bd.0d0e2c"
+            ]
+        ]
+    },
+    {
+        "id": "43cbb374.e675cc",
+        "type": "image",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "x": 400,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a65b5a5.b2b57a8",
+        "type": "debug",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 420,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "410302ff.67a83c",
+        "type": "change",
+        "z": "f3591079.b3ed7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temp",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "bc217b33.f3fe38"
+            ]
+        ]
+    },
+    {
+        "id": "74f135e.68dfacc",
+        "type": "subflow:3b5ee8e1.fe59b8",
+        "z": "5769be00.0fe0a4",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f2a48e7c.c5dc1",
+        "type": "inject",
+        "z": "a132673b.c53118",
+        "name": "",
+        "topic": "temp",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "453c7587.5aea3c",
+                "ea18b577.1c80d8",
+                "916efeed.d4d7f"
+            ]
+        ]
+    },
+    {
+        "id": "453c7587.5aea3c",
+        "type": "mqtt out",
+        "z": "a132673b.c53118",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 400,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ea18b577.1c80d8",
+        "type": "debug",
+        "z": "a132673b.c53118",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 400,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "916efeed.d4d7f",
+        "type": "change",
+        "z": "a132673b.c53118",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "humedad",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "3d8540e1.5c821"
+            ]
+        ]
+    },
+    {
+        "id": "3d8540e1.5c821",
+        "type": "debug",
+        "z": "a132673b.c53118",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 560,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b4460674.102538",
+        "type": "switch",
+        "z": "a132673b.c53118",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "379ad39f.ff95ac",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "m5stack/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "14e6d1b1.c1cc6e",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "4abfc1b8.e7753"
+            ]
+        ]
+    },
+    {
+        "id": "4abfc1b8.e7753",
+        "type": "mqtt out",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 390,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "dd1de943.4c0cb8",
+        "type": "debug",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 430,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "22302cda.5d1824",
+        "type": "ui_switch",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "label": "rele",
+        "tooltip": "",
+        "group": "7eac7625.7f9fc8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "nodo14/rele",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "x": 550,
+        "y": 360,
+        "wires": [
+            [
+                "f77d5d58.e7309"
+            ]
+        ]
+    },
+    {
+        "id": "f77d5d58.e7309",
+        "type": "mqtt out",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "nodo14/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 750,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "213d7d2e.2d5872",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "m5stack/temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "dd1de943.4c0cb8",
+                "3f2af84b.6c95d8"
+            ]
+        ]
+    },
+    {
+        "id": "ec15e9b6.7cd958",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "m5stack/hum",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "dd1de943.4c0cb8",
+                "fc2acf70.6380e"
+            ]
+        ]
+    },
+    {
+        "id": "3f2af84b.6c95d8",
+        "type": "ui_text",
+        "z": "1cf3d19.56a4c2e",
+        "group": "de6eadd6.a14af",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperatura",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 450,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fc2acf70.6380e",
+        "type": "ui_text",
+        "z": "1cf3d19.56a4c2e",
+        "group": "de6eadd6.a14af",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Humedad",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 440,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "4bd35010.be9cc",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "nodo14/dato10s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [
+                "51d03da6.4fbfe4"
+            ]
+        ]
+    },
+    {
+        "id": "f5618f3.527737",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "nodo14/dato60s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 140,
+        "y": 480,
+        "wires": [
+            [
+                "1b092bdd.b8b9f4"
+            ]
+        ]
+    },
+    {
+        "id": "233bdf50.006f4",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "nodo14/reset",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "d0bc4230.47743"
+            ]
+        ]
+    },
+    {
+        "id": "51d03da6.4fbfe4",
+        "type": "ui_text",
+        "z": "1cf3d19.56a4c2e",
+        "group": "ce383b25.1bb8e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 420,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1b092bdd.b8b9f4",
+        "type": "ui_text",
+        "z": "1cf3d19.56a4c2e",
+        "group": "ce383b25.1bb8e8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 410,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d0bc4230.47743",
+        "type": "ui_text",
+        "z": "1cf3d19.56a4c2e",
+        "group": "ce383b25.1bb8e8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 410,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "513a879f.527998",
+        "type": "mqtt out",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "nodo14/led",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 410,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "1dd3743a.cb595c",
+        "type": "ui_button",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "group": "7eac7625.7f9fc8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Led ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "",
+        "x": 200,
+        "y": 580,
+        "wires": [
+            [
+                "513a879f.527998"
+            ]
+        ]
+    },
+    {
+        "id": "244548cc.245ba8",
+        "type": "ui_button",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "group": "7eac7625.7f9fc8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Led OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "0",
+        "payloadType": "str",
+        "topic": "",
+        "x": 200,
+        "y": 620,
+        "wires": [
+            [
+                "513a879f.527998"
+            ]
+        ]
+    },
+    {
+        "id": "e6b736f6.afcfb8",
+        "type": "rpi-gpio out",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "pin": "12",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 440,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "db37ec59.fc207",
+        "type": "mqtt in",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "topic": "Rpi/led",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "e6b736f6.afcfb8"
+            ]
+        ]
+    },
+    {
+        "id": "3d9ce473.35e74c",
+        "type": "mqtt out",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "topic": "Rpi/boton",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 520,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "25f00259.a7423e",
+        "type": "rpi-gpio in",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "pin": "16",
+        "intype": "down",
+        "debounce": "25",
+        "read": false,
+        "x": 300,
+        "y": 320,
+        "wires": [
+            [
+                "1c7d3409.073efc",
+                "3d9ce473.35e74c",
+                "75d0af4b.87dbd"
+            ]
+        ]
+    },
+    {
+        "id": "1c7d3409.073efc",
+        "type": "debug",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4738dd45.aa95d4",
+        "type": "ui_switch",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "2bf9d26f.1ad00e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 280,
+        "y": 500,
+        "wires": [
+            [
+                "ddbd7e16.0de6e"
+            ]
+        ]
+    },
+    {
+        "id": "ddbd7e16.0de6e",
+        "type": "mqtt out",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "topic": "Rpi/led",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 480,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "75d0af4b.87dbd",
+        "type": "ui_gauge",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "group": "2bf9d26f.1ad00e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "0",
+        "seg2": "1",
+        "x": 520,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "92230191.eebab",
+        "type": "mqtt out",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "topic": "nodo14/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "4922f4b9.acd6bc",
+        "x": 510,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5e442c3.5163dd4",
+        "type": "mqtt in",
+        "z": "5bd77a75.88e8b4",
+        "name": "",
+        "topic": "Rpi/boton",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "92230191.eebab"
+            ]
+        ]
+    },
+    {
+        "id": "420e3d80.257b14",
+        "type": "debug",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 690,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "eb6f0403.9d38f8",
+        "type": "mqtt in",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "topic": "Rpi/boton",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4922f4b9.acd6bc",
+        "x": 110,
+        "y": 340,
+        "wires": [
+            [
+                "141aac5d.39e404"
+            ]
+        ]
+    },
+    {
+        "id": "141aac5d.39e404",
+        "type": "change",
+        "z": "1cf3d19.56a4c2e",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "str",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "str",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 360,
+        "wires": [
+            [
+                "420e3d80.257b14",
+                "22302cda.5d1824"
+            ]
+        ]
+    }
+]
