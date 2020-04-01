@@ -11,3 +11,6 @@ Más información: https://www.aprendiendoarduino.com/
 ![dashboard1](04-Ejercicio%20Final/Ejercicio_1/Ejercicio_1-2.png)
 
 ## Ejercicio 2
+![dashboard1](04-Ejercicio%20Final/Ejercicio_2/Dashboard_2.png)
+
+![dashboard1](04-Ejercicio%20Final/Ejercicio_2/Ejercicio_2.png)
