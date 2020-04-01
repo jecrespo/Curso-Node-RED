@@ -1,0 +1,397 @@
+[
+    {
+        "id": "76554285.08c41c",
+        "type": "tab",
+        "label": "Nodos Remotos",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "97ed21fa.075d8",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo1/dato10s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "f1047008.578b6",
+                "9e06cc52.8ff83"
+            ]
+        ]
+    },
+    {
+        "id": "14b8992a.84f5f7",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo1/dato60s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "f1047008.578b6",
+                "5eb30b57.197054"
+            ]
+        ]
+    },
+    {
+        "id": "f5c4c837.db1578",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo1/reset",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "f1047008.578b6",
+                "abf79013.df6ba"
+            ]
+        ]
+    },
+    {
+        "id": "930523f2.a7238",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo2/dato10s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 300,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "1cda8f52.adb951",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo2/dato60s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 340,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "68e475cf.0e588c",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo2/reset",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "c69db004.018ab",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo5/dato10s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "de107736.451a58",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo5/dato60s",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "f5a995da.531398",
+        "type": "mqtt in",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo5/reset",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "f1047008.578b6"
+            ]
+        ]
+    },
+    {
+        "id": "16766fd.57e289",
+        "type": "mqtt out",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo1/led",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "14fbd8c8.20c847",
+        "type": "mqtt out",
+        "z": "76554285.08c41c",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 750,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f1047008.578b6",
+        "type": "debug",
+        "z": "76554285.08c41c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 600,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "9e06cc52.8ff83",
+        "type": "ui_text",
+        "z": "76554285.08c41c",
+        "group": "d721aa51.1bcaf8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "dato10s",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 460,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "5eb30b57.197054",
+        "type": "ui_text",
+        "z": "76554285.08c41c",
+        "group": "d721aa51.1bcaf8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "dato60s",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 460,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "abf79013.df6ba",
+        "type": "ui_text",
+        "z": "76554285.08c41c",
+        "group": "d721aa51.1bcaf8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "reset",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 450,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "62d2ddc1.188f64",
+        "type": "ui_button",
+        "z": "76554285.08c41c",
+        "name": "limpia datos",
+        "group": "d721aa51.1bcaf8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Limpia Datos",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "0",
+        "payloadType": "str",
+        "topic": "",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "9e06cc52.8ff83",
+                "5eb30b57.197054",
+                "abf79013.df6ba"
+            ]
+        ]
+    },
+    {
+        "id": "634d0979.53c508",
+        "type": "ui_switch",
+        "z": "76554285.08c41c",
+        "name": "",
+        "label": "Led",
+        "tooltip": "",
+        "group": "11e4063d.b039ca",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "16766fd.57e289"
+            ]
+        ]
+    },
+    {
+        "id": "4b0cf50d.21ad3c",
+        "type": "ui_switch",
+        "z": "76554285.08c41c",
+        "name": "",
+        "label": "Relé",
+        "tooltip": "",
+        "group": "11e4063d.b039ca",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "14fbd8c8.20c847"
+            ]
+        ]
+    },
+    {
+        "id": "760437d5.268b98",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "d721aa51.1bcaf8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Suscripciones",
+        "tab": "e9f44719.dba6d8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "11e4063d.b039ca",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pulsadores",
+        "tab": "e9f44719.dba6d8",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e9f44719.dba6d8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
