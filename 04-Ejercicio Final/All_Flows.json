@@ -28,6 +28,13 @@
         "info": ""
     },
     {
+        "id": "aa40f00a.29d6a",
+        "type": "tab",
+        "label": "Ejercicio 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "8bd43c71.2de23",
         "type": "tab",
         "label": "Pin",
@@ -38,6 +45,13 @@
         "id": "95c32f11.1ede8",
         "type": "tab",
         "label": "Ejemplo Subflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c7f03f48.ec029",
+        "type": "tab",
+        "label": "Ejercicio 4",
         "disabled": false,
         "info": ""
     },
@@ -156,6 +170,25 @@
         "color": "#DDAA99"
     },
     {
+        "id": "159760f9.e3ca6f",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [],
+        "out": [
+            {
+                "x": 620,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "7eff1fe2.5f886",
+                        "port": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": "760437d5.268b98",
         "type": "mqtt-broker",
         "z": "",
@@ -181,8 +214,9 @@
         "id": "52495fbe.506f9",
         "type": "ui_group",
         "z": "",
-        "name": "Secure",
+        "name": "Encendido Relé",
         "tab": "a66819c3.dd1d78",
+        "order": 1,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -193,6 +227,7 @@
         "z": "",
         "name": "pin",
         "tab": "a66819c3.dd1d78",
+        "order": 2,
         "disp": false,
         "width": "1"
     },
@@ -201,8 +236,8 @@
         "type": "ui_tab",
         "z": "",
         "name": "Pin Seguridad",
-        "icon": "home",
-        "order": 3,
+        "icon": "lock",
+        "order": 4,
         "disabled": false,
         "hidden": false
     },
@@ -368,8 +403,8 @@
         "type": "ui_tab",
         "z": "",
         "name": "Openweathermap",
-        "icon": "dashboard",
-        "order": 2,
+        "icon": "wb_sunny",
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -427,7 +462,7 @@
         "type": "ui_tab",
         "z": "",
         "name": "Home",
-        "icon": "dashboard",
+        "icon": "home",
         "order": 1,
         "disabled": false,
         "hidden": false
@@ -442,13 +477,6 @@
         "disp": true,
         "width": "6",
         "collapse": false
-    },
-    {
-        "id": "7756ae87.6888b",
-        "type": "ui_tab",
-        "name": "Tab 4",
-        "icon": "dashboard",
-        "order": 4
     },
     {
         "id": "11e4063d.b039ca",
@@ -468,6 +496,67 @@
         "name": "RPi",
         "tab": "e9f44719.dba6d8",
         "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9692d02b.f220c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Control Relés",
+        "tab": "e9f44719.dba6d8",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c6f008.f9b2bff8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Secure",
+        "tab": "",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "855a52ad.b762d",
+        "type": "ui_group",
+        "z": "",
+        "name": "pin",
+        "tab": "",
+        "disp": false,
+        "width": "1"
+    },
+    {
+        "id": "9d10d93e.d7eb68",
+        "type": "ui_group",
+        "z": "",
+        "name": "Estado Puerta",
+        "tab": "a66819c3.dd1d78",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "fdbd3f26.fb77",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Email",
+        "icon": "email",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "1220ec2.1cd4114",
+        "type": "ui_group",
+        "z": "",
+        "name": "Manda Correo",
+        "tab": "fdbd3f26.fb77",
+        "order": 1,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -555,7 +644,7 @@
     {
         "id": "e059dffd.857d",
         "type": "ui_button",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "",
         "group": "52495fbe.506f9",
         "order": 0,
@@ -570,8 +659,8 @@
         "payload": "true",
         "payloadType": "bool",
         "topic": "show",
-        "x": 162,
-        "y": 210.0000057220459,
+        "x": 190,
+        "y": 80,
         "wires": [
             [
                 "ddfe7ef9.d4819"
@@ -581,13 +670,13 @@
     {
         "id": "16177d50.1de743",
         "type": "function",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "verify_pin",
         "func": "var pins = [\"2136\"];\nvar verified = false;\n\nfor(var i=0;i<pins.length;i++){\n    if(msg.passcode == pins[i]){\n        verified = true;\n        break;\n    }\n}\n\nmsg.verified = verified;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 512,
-        "y": 210.0000057220459,
+        "x": 540,
+        "y": 80,
         "wires": [
             [
                 "f7400602.267f18"
@@ -597,7 +686,7 @@
     {
         "id": "f7400602.267f18",
         "type": "switch",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "check",
         "property": "verified",
         "propertyType": "msg",
@@ -611,8 +700,8 @@
         ],
         "checkall": "false",
         "outputs": 2,
-        "x": 190,
-        "y": 400,
+        "x": 210,
+        "y": 200,
         "wires": [
             [
                 "7eff1fe2.5f886"
@@ -623,61 +712,46 @@
         ]
     },
     {
-        "id": "79501d30.94ddb4",
-        "type": "ui_toast",
-        "z": "8bd43c71.2de23",
-        "position": "top right",
-        "displayTime": "3",
-        "outputs": 0,
-        "ok": "OK",
-        "cancel": "",
-        "topic": "",
-        "name": "",
-        "x": 630,
-        "y": 400,
-        "wires": []
-    },
-    {
         "id": "7eff1fe2.5f886",
         "type": "function",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "pin_ok",
-        "func": "var msg2 = {};\nmsg2.topic = \"Pin successfully verified!\";\nmsg2.payload = \"\";\n    \nreturn [msg, msg2];",
+        "func": "var msg2 = {};\nmsg2.topic = \"Pin successfully verified!\";\nmsg2.payload = \"ON\";\n    \nreturn [msg, msg2];",
         "outputs": "2",
         "noerr": 0,
-        "x": 411.87499618530273,
-        "y": 386.9999942779541,
+        "x": 370,
+        "y": 180,
         "wires": [
             [
                 "2d432a5f.9d0536"
             ],
             [
-                "79501d30.94ddb4",
-                "2d432a5f.9d0536"
+                "2d432a5f.9d0536",
+                "74864796.73bf78"
             ]
         ]
     },
     {
         "id": "dfd871b1.0f08e",
         "type": "function",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "pin_error",
-        "func": " msg.topic = \"Wrong PIN\";\n msg.payload = \"\";\n    \nreturn msg;",
+        "func": " msg.topic = \"Wrong PIN\";\n msg.payload = \"OFF\";\n    \nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 421.87499618530273,
-        "y": 426.9999942779541,
+        "x": 378.12500381469727,
+        "y": 233.0000057220459,
         "wires": [
             [
-                "79501d30.94ddb4",
-                "2d432a5f.9d0536"
+                "2d432a5f.9d0536",
+                "74864796.73bf78"
             ]
         ]
     },
     {
         "id": "ddfe7ef9.d4819",
         "type": "ui_template",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "group": "15e0a766.19af89",
         "name": "Pin_Unlock",
         "order": 0,
@@ -687,8 +761,8 @@
         "storeOutMessages": false,
         "fwdInMessages": false,
         "templateScope": "local",
-        "x": 347.3750343322754,
-        "y": 209.96427536010742,
+        "x": 375.3750343322754,
+        "y": 79.96426963806152,
         "wires": [
             [
                 "16177d50.1de743"
@@ -698,13 +772,16 @@
     {
         "id": "2d432a5f.9d0536",
         "type": "debug",
-        "z": "8bd43c71.2de23",
+        "z": "159760f9.e3ca6f",
         "name": "do_Something",
         "active": true,
-        "console": "false",
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
         "complete": "payload",
-        "x": 621.8749961853027,
-        "y": 346.9999942779541,
+        "targetType": "msg",
+        "x": 640,
+        "y": 260,
         "wires": []
     },
     {
@@ -3205,6 +3282,570 @@
         "wires": [
             [
                 "c5fc787.9a64988"
+            ]
+        ]
+    },
+    {
+        "id": "dcb04f59.4503e",
+        "type": "ui_switch",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "label": "Botón 1",
+        "tooltip": "",
+        "group": "9692d02b.f220c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "b1e95e4d.3fdfe",
+                "5b6c7cfa.d63d24",
+                "aaa3e420.ad0cf8",
+                "9ded294.00bd6d8",
+                "e2cc20fa.bc899"
+            ]
+        ]
+    },
+    {
+        "id": "5b6c7cfa.d63d24",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo2/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "aaa3e420.ad0cf8",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo3/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9ded294.00bd6d8",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo4/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b1e95e4d.3fdfe",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e2cc20fa.bc899",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo5/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b7e5e2ec.2885a",
+        "type": "ui_switch",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "label": "Botón 2",
+        "tooltip": "",
+        "group": "9692d02b.f220c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "e59d0148.61e3b",
+                "deb821ca.0ac8c",
+                "182928e3.d19587",
+                "5997c93e.b3aee8",
+                "4263c7fd.903f98"
+            ]
+        ]
+    },
+    {
+        "id": "deb821ca.0ac8c",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo7/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "182928e3.d19587",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo8/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "5997c93e.b3aee8",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo9/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e59d0148.61e3b",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo6/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4263c7fd.903f98",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo10/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "71c52b09.a74164",
+        "type": "ui_switch",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "label": "Botón 3",
+        "tooltip": "",
+        "group": "9692d02b.f220c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "6c98d3.22cd772c",
+                "9740f3b6.1c145",
+                "b016eaad.766bf8",
+                "d96bdbfc.a236e8",
+                "c665bab.b681a48"
+            ]
+        ]
+    },
+    {
+        "id": "9740f3b6.1c145",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo12/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b016eaad.766bf8",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo13/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d96bdbfc.a236e8",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo14/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "6c98d3.22cd772c",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo11/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c665bab.b681a48",
+        "type": "mqtt out",
+        "z": "aa40f00a.29d6a",
+        "name": "",
+        "topic": "nodo15/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 430,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "74864796.73bf78",
+        "type": "ui_toast",
+        "z": "159760f9.e3ca6f",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 630,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e8d8aea3.171a",
+        "type": "ui_gauge",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "group": "9d10d93e.d7eb68",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "fceaa488.cc41e8",
+        "type": "mqtt out",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1c471209.00042e",
+        "type": "delay",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 600,
+        "y": 140,
+        "wires": [
+            [
+                "d2d80890.11e5e8"
+            ]
+        ]
+    },
+    {
+        "id": "58da2af0.7a5384",
+        "type": "mqtt in",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "e8d8aea3.171a"
+            ]
+        ]
+    },
+    {
+        "id": "d2d80890.11e5e8",
+        "type": "mqtt out",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6edbba2a.555f04",
+        "type": "change",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "1c471209.00042e"
+            ]
+        ]
+    },
+    {
+        "id": "1b759cfa.812ea3",
+        "type": "subflow:159760f9.e3ca6f",
+        "z": "8bd43c71.2de23",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "fceaa488.cc41e8",
+                "6edbba2a.555f04"
+            ]
+        ]
+    },
+    {
+        "id": "2e5e63e3.a53eec",
+        "type": "ui_form",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "label": "",
+        "group": "1220ec2.1cd4114",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Destinatario",
+                "value": "Destinatario",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Subject",
+                "value": "Subject",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Contenido",
+                "value": "Contenido",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Destinatario": "",
+            "Subject": "",
+            "Contenido": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "683dbadd.d8fd64",
+                "1d82add2.af2702",
+                "f465922a.6938e"
+            ]
+        ]
+    },
+    {
+        "id": "3ecac821.5fa668",
+        "type": "e-mail",
+        "z": "c7f03f48.ec029",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "manda email",
+        "x": 690,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "683dbadd.d8fd64",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "Construye email",
+        "func": "\nmensaje = msg.payload.Contenido;\ndestinatario = msg.payload.Destinatario;\nasunto = msg.payload.Subject;\n\nmsg = {\n    payload: mensaje,\n    to: destinatario,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "3ecac821.5fa668",
+                "1d82add2.af2702"
+            ]
+        ]
+    },
+    {
+        "id": "1d82add2.af2702",
+        "type": "debug",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 670,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f465922a.6938e",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "clear form",
+        "func": "mensaje = msg.payload.Contenido;\ndestinatario = msg.payload.Destinatario;\nasunto = msg.payload.Subject;\n\nmsg.payload = {\n    Contenido: \"\",\n    Destinatario: \"\",\n    Subject: \"\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "2e5e63e3.a53eec"
             ]
         ]
     }
