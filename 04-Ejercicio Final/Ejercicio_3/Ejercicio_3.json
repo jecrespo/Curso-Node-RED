@@ -1,0 +1,385 @@
+[
+    {
+        "id": "159760f9.e3ca6f",
+        "type": "subflow",
+        "name": "Subflow 2",
+        "info": "",
+        "in": [],
+        "out": [
+            {
+                "x": 620,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "7eff1fe2.5f886",
+                        "port": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "e059dffd.857d",
+        "type": "ui_button",
+        "z": "159760f9.e3ca6f",
+        "name": "",
+        "group": "52495fbe.506f9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Unlock_door",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "lock",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "show",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "ddfe7ef9.d4819"
+            ]
+        ]
+    },
+    {
+        "id": "16177d50.1de743",
+        "type": "function",
+        "z": "159760f9.e3ca6f",
+        "name": "verify_pin",
+        "func": "var pins = [\"2136\"];\nvar verified = false;\n\nfor(var i=0;i<pins.length;i++){\n    if(msg.passcode == pins[i]){\n        verified = true;\n        break;\n    }\n}\n\nmsg.verified = verified;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "f7400602.267f18"
+            ]
+        ]
+    },
+    {
+        "id": "f7400602.267f18",
+        "type": "switch",
+        "z": "159760f9.e3ca6f",
+        "name": "check",
+        "property": "verified",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "7eff1fe2.5f886"
+            ],
+            [
+                "dfd871b1.0f08e"
+            ]
+        ]
+    },
+    {
+        "id": "7eff1fe2.5f886",
+        "type": "function",
+        "z": "159760f9.e3ca6f",
+        "name": "pin_ok",
+        "func": "var msg2 = {};\nmsg2.topic = \"Pin successfully verified!\";\nmsg2.payload = \"ON\";\n    \nreturn [msg, msg2];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "2d432a5f.9d0536"
+            ],
+            [
+                "2d432a5f.9d0536",
+                "74864796.73bf78"
+            ]
+        ]
+    },
+    {
+        "id": "dfd871b1.0f08e",
+        "type": "function",
+        "z": "159760f9.e3ca6f",
+        "name": "pin_error",
+        "func": " msg.topic = \"Wrong PIN\";\n msg.payload = \"OFF\";\n    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 378.12500381469727,
+        "y": 233.0000057220459,
+        "wires": [
+            [
+                "2d432a5f.9d0536",
+                "74864796.73bf78"
+            ]
+        ]
+    },
+    {
+        "id": "ddfe7ef9.d4819",
+        "type": "ui_template",
+        "z": "159760f9.e3ca6f",
+        "group": "15e0a766.19af89",
+        "name": "Pin_Unlock",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<div ng-init=\"init()\" id=\"pin_insert\" class=\"dialog\">\n    \n    <div class=\"dialog_content\">\n        \n        <div class=\"dialog_header\">\n            <span ng-click=\"closeDialog()\" class=\"close\">&times;</span>\n            <h2 style=\"margin:10px\">Insert PIN</h2>\n        </div>\n        \n        <div class=\"dialog_body\">\n\n           <div layout=\"row\" layout-align=\"center\">\n                <div class=\"number_placeholder\">\n                    {{passcode.substring(0, 1)}}\n                </div>\n                <div class=\"number_placeholder\">\n                    {{passcode.substring(1, 2)}}\n                </div>\n                <div class=\"number_placeholder\">\n                    {{passcode.substring(2, 3)}}\n                </div>\n                <div class=\"number_placeholder\">\n                    {{passcode.substring(3, 4)}}\n                </div>\n            </div>\n            \n            <div layout=\"column\" layout-align=\"center\" style=\"margin-top: 10px\">\n                <div layout=\"row\" layout-align=\"center\">\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(1)\">1</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(2)\">2</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(3)\">3</md-button>\n                    </div>\n                </div>\n                 <div layout=\"row\" layout-align=\"center\">\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(4)\">4</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(5)\">5</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(6)\">6</md-button>\n                    </div>\n                </div>\n                 <div layout=\"row\" layout-align=\"center\">\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(7)\">7</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(8)\">8</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(9)\">9</md-button>\n                    </div>\n                </div>\n                 <div layout=\"row\" layout-align=\"center\">\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"confirm()\">\n                            <ng-md-icon icon=\"done\" style=\"color:#fff;\"></ng-md-icon>\n                        </md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"add(0)\">0</md-button>\n                    </div>\n                    <div class=\"number_box\">\n                        <md-button class=\"pin\" ng-click=\"delete()\">\n                            <ng-md-icon icon=\"arrow_back\" style=\"color:#fff;\"></ng-md-icon>\n                        </md-button>\n                    </div>\n                </div>\n            </div> \n          \n        </div> <!--dialog_body-->\n    </div> <!--dialog_content-->\n</div>  <!--dialog-->\n\n\n<style>\n\n/* The Dialog (background) */\n.dialog {\n    display: none; /* Hidden by default */\n    position: fixed; /* Stay in place */\n    z-index: 9999; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n    -webkit-transform: translateZ(0px);\n    -webkit-transform: translate3d(0,0,0);\n    -webkit-perspective: 1000;\n}\n\n.dialog_content {\n    position: absolute;\n    background-color: #fff;\n    left: calc(50% - 170px);\n    top: 30px;\n    border-radius: 10px;\n    padding: 0;\n    width: 340px;\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);\n    -webkit-animation-name: animatetop;\n    animation-name: animatetop;\n    animation-duration: 0.4s;\n}\n\n/* Media query for smartphones (to Fix?) */\n@media only screen and (min-device-width : 375px) and (max-device-width : 667px) { \n    .dialog_content {\n    margin-top: 5%;\n    margin-left: 5%;\n}\n}\n\n/* Add Animation */\n@-webkit-keyframes animatetop {\n    from {top: -300px; opacity: 0} \n    to {top: 0; opacity: 1}\n}\n\n@keyframes animatetop {\n    from {top: -300px; opacity: 0}\n    to {top: 0; opacity: 1}\n}\n\n/* Dialog Header */\n.dialog_header {\n    padding: 2px 16px;\n    background-color: #03A9F4;\n    border-radius: 10px 10px 0 0;\n    color: white;\n}\n\n/* Dialog Body */\n.dialog_body {padding: 5px;}\n\n/* The Close Button */\n.close {\n    color: #fff;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.close:hover,\n.close:focus {\n    color: #1565C0;\n    text-decoration: none;\n    cursor: pointer;\n}\n\n/* __ */\n.number_placeholder{\n    width: 50px;\n    height: 34px;\n    margin: 10px;\n    font-size: 20pt;\n    text-align: center;\n    border-bottom: 1px solid black;\n}\n\n/* Number container */\n.number_box{\n    margin: 5px;\n}\n\n/* Buttons style */\n.pin {\n    min-height: 50px;\n    min-width: 50px;\n    font-weight: bold;\n    margin: 0px 10px 10px 0px;\n    box-shadow: 4px 4px 6px 0 #dadada;\n    background-color: #29B6F6;\n    color: #fff;\n}\n\n.pin:not([disabled]):hover {\n    background-color: #03A9F4;\n}\n\n.btn1 {\n  color : rgb(49, 46, 46);\n  background-color: rgba(255, 222, 121, 0.96);\n  border-radius: 10px 0 0 10px;\n  font-size: 16px;\n}\n\n.btn1:not([disabled]):hover {\n  background-color: rgba(107, 103, 91, 0.96);\n  color: white;\n}\n\n.btn1[disabled] {\n  color : rgb(187, 187, 187);\n  background-color: rgba(230, 230, 229, 0.96);\n}\n\n</style>\n\n<script>\n\n/**\n * pin_dialog.js\n * Node-Red UI template for Node-Red Dashboard. \n * Custom dialog that asks for a PIN to allow actions\n * Enjoy it :). \n * -- Daniel\n *\n *\n * @license The Unlicense, http://unlicense.org/\n * @version 0.2\n * @author  Daniel Lando, https://github.com/robertsLando\n * @updated 2019-03-18\n * @link    ----\n *\n *\n */\n\nvar dialog;\n\n/* ==== */\n(function(scope) {\n    \n    scope.passcode = \"\";\n    scope.payload = \"\";\n    scope.inited = false;\n    \n    scope.init = function() {\n        scope.passcode = \"\";\n        //Hide the md-panel\n        $('#pin_insert').parent().parent().css(\"display\", \"none\");\n        //This trick make it works on smartphones too :)\n        dialog = $('#pin_insert').detach();\n        //dialog.appendTo(document.body); // This leaves ghost numpads if pinpad is not opened!\n    }\n    \n    scope.showDialog = function() {\n        dialog.appendTo(document.body); // better to add the body only when the numpad is displayed (seams to be removed automatically)\n        dialog.css(\"display\", \"block\");\n    }\n    \n    scope.closeDialog = function(){\n        dialog.css(\"display\", \"none\");\n    }\n    \n    scope.add = function(value) {\n        if(scope.passcode.length < 4) {\n            scope.passcode = scope.passcode + value;\n            if(scope.passcode.length == 4) {\n                console.log(\"The four digit code was entered\");\n                   \n            }\n        }\n    }\n \n    scope.delete = function() {\n        if(scope.passcode.length > 0) {\n            scope.passcode = scope.passcode.substring(0, scope.passcode.length - 1);\n        }\n    }\n    \n    scope.confirm = function() {\n        if(scope.passcode.length == 4) {\n            scope.send({passcode: scope.passcode, payload : scope.payload});\n            scope.closeDialog();\n            scope.passcode = \"\";\n            scope.payload = \"\";\n        }\n    }\n\n    scope.$watch('msg', function(data) {\n        if(data && data.topic){\n            switch(data.topic){\n               case \"show\":\n                   if(scope.inited){\n                        scope.payload = data.payload;\n                        scope.showDialog();\n                   }\n                   else\n                        scope.inited = true;\n                break;\n                case \"close\": \n                    scope.closeDialog(); \n                break;\n            }\n        }\n    });\n})(scope);\n\n</script>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 375.3750343322754,
+        "y": 79.96426963806152,
+        "wires": [
+            [
+                "16177d50.1de743"
+            ]
+        ]
+    },
+    {
+        "id": "2d432a5f.9d0536",
+        "type": "debug",
+        "z": "159760f9.e3ca6f",
+        "name": "do_Something",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "74864796.73bf78",
+        "type": "ui_toast",
+        "z": "159760f9.e3ca6f",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 630,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "52495fbe.506f9",
+        "type": "ui_group",
+        "z": "",
+        "name": "Encendido Relé",
+        "tab": "a66819c3.dd1d78",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "15e0a766.19af89",
+        "type": "ui_group",
+        "z": "",
+        "name": "pin",
+        "tab": "a66819c3.dd1d78",
+        "order": 2,
+        "disp": false,
+        "width": "1"
+    },
+    {
+        "id": "a66819c3.dd1d78",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Pin Seguridad",
+        "icon": "lock",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8bd43c71.2de23",
+        "type": "tab",
+        "label": "Pin",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e8d8aea3.171a",
+        "type": "ui_gauge",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "group": "9d10d93e.d7eb68",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "fceaa488.cc41e8",
+        "type": "mqtt out",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1c471209.00042e",
+        "type": "delay",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 600,
+        "y": 140,
+        "wires": [
+            [
+                "d2d80890.11e5e8"
+            ]
+        ]
+    },
+    {
+        "id": "58da2af0.7a5384",
+        "type": "mqtt in",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "760437d5.268b98",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "e8d8aea3.171a"
+            ]
+        ]
+    },
+    {
+        "id": "d2d80890.11e5e8",
+        "type": "mqtt out",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "topic": "nodo1/rele",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6edbba2a.555f04",
+        "type": "change",
+        "z": "8bd43c71.2de23",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "1c471209.00042e"
+            ]
+        ]
+    },
+    {
+        "id": "1b759cfa.812ea3",
+        "type": "subflow:159760f9.e3ca6f",
+        "z": "8bd43c71.2de23",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "fceaa488.cc41e8",
+                "6edbba2a.555f04"
+            ]
+        ]
+    },
+    {
+        "id": "9d10d93e.d7eb68",
+        "type": "ui_group",
+        "z": "",
+        "name": "Estado Puerta",
+        "tab": "a66819c3.dd1d78",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "760437d5.268b98",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
