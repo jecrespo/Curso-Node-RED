@@ -1,0 +1,251 @@
+[
+    {
+        "id": "c7f03f48.ec029",
+        "type": "tab",
+        "label": "Ejercicio 4",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2e5e63e3.a53eec",
+        "type": "ui_form",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "label": "",
+        "group": "1220ec2.1cd4114",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Destinatario",
+                "value": "Destinatario",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Subject",
+                "value": "Subject",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Contenido",
+                "value": "Contenido",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Destinatario": "",
+            "Subject": "",
+            "Contenido": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 270,
+        "y": 180,
+        "wires": [
+            [
+                "683dbadd.d8fd64",
+                "1d82add2.af2702",
+                "f465922a.6938e"
+            ]
+        ]
+    },
+    {
+        "id": "3ecac821.5fa668",
+        "type": "e-mail",
+        "z": "c7f03f48.ec029",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "manda email",
+        "x": 690,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "683dbadd.d8fd64",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "Construye email",
+        "func": "\nmensaje = msg.payload.Contenido;\ndestinatario = msg.payload.Destinatario;\nasunto = msg.payload.Subject;\n\nmsg = {\n    payload: mensaje,\n    to: destinatario,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "3ecac821.5fa668",
+                "1d82add2.af2702"
+            ]
+        ]
+    },
+    {
+        "id": "1d82add2.af2702",
+        "type": "debug",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 670,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f465922a.6938e",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "clear form",
+        "func": "mensaje = msg.payload.Contenido;\ndestinatario = msg.payload.Destinatario;\nasunto = msg.payload.Subject;\n\nmsg.payload = {\n    Contenido: \"\",\n    Destinatario: \"\",\n    Subject: \"\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "2e5e63e3.a53eec"
+            ]
+        ]
+    },
+    {
+        "id": "7b089f62.19c38",
+        "type": "ui_form",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "label": "",
+        "group": "b3747e83.b71dd",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Número Destinatario",
+                "value": "Destinatario",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Texto",
+                "value": "Texto",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Destinatario": "",
+            "Texto": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 250,
+        "y": 420,
+        "wires": [
+            [
+                "2a531901.80d356",
+                "d57f09ee.851c18"
+            ]
+        ]
+    },
+    {
+        "id": "2a531901.80d356",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "clear form",
+        "func": "mensaje = msg.payload.Texto;\ndestinatario = msg.payload.Destinatario;\n\nmsg.payload = {\n    Texto: \"\",\n    Destinatario: \"\",\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 520,
+        "wires": [
+            [
+                "7b089f62.19c38"
+            ]
+        ]
+    },
+    {
+        "id": "ca291b9f.5f38f8",
+        "type": "twilio out",
+        "z": "c7f03f48.ec029",
+        "twilio": "f744599.fffeca8",
+        "twilioType": "sms",
+        "url": "",
+        "number": "",
+        "name": "Manda SMS",
+        "x": 630,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d57f09ee.851c18",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "Construye SMS",
+        "func": "\nmensaje = msg.payload.Texto;\ndestinatario = \"+34\" + msg.payload.Destinatario;\n\nmsg = {\n    payload: mensaje,\n    topic: destinatario\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "ca291b9f.5f38f8"
+            ]
+        ]
+    },
+    {
+        "id": "1220ec2.1cd4114",
+        "type": "ui_group",
+        "z": "",
+        "name": "Manda Correo",
+        "tab": "fdbd3f26.fb77",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "b3747e83.b71dd",
+        "type": "ui_group",
+        "z": "",
+        "name": "Manda SMS",
+        "tab": "fdbd3f26.fb77",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f744599.fffeca8",
+        "type": "twilio-api",
+        "z": "",
+        "name": "Cuenta Twilio",
+        "sid": "ACd75664b190e9138b3ab756a09b88a5cf",
+        "from": "+18646531673"
+    },
+    {
+        "id": "fdbd3f26.fb77",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Email & SMS",
+        "icon": "email",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]
