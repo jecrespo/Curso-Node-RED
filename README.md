@@ -21,3 +21,9 @@ Más información: https://www.aprendiendoarduino.com/
 ![dashboard1](04-Ejercicio%20Final/Ejercicio_3/Ejercicio_3-flow.png)
 
 ![dashboard1](04-Ejercicio%20Final/Ejercicio_3/Ejercicio_3-subflow.png)
+
+## Ejercicio 4
+![dashboard1](04-Ejercicio%20Final/Ejercicio_4/Ejercicio_4_Dashboard.png)
+
+![dashboard1](04-Ejercicio%20Final/Ejercicio_4/Ejercicio_4_Flow.png)
+
