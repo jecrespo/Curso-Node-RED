@@ -1,0 +1,346 @@
+[
+    {
+        "id": "a8fc729b.d16b6",
+        "type": "tab",
+        "label": "Ejercicio 5",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4aa4dd74.ef8c04",
+        "type": "http request",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "http://www.aprendiendoarduino.com/servicios/imagen.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "91cafe4c.0a912",
+                "9b6b91f8.19cce",
+                "cdfb28fd.b99b98",
+                "2efe28b4.0cc638"
+            ]
+        ]
+    },
+    {
+        "id": "c7ceab15.a9bfd8",
+        "type": "inject",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "4aa4dd74.ef8c04"
+            ]
+        ]
+    },
+    {
+        "id": "91cafe4c.0a912",
+        "type": "image",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "x": 680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d2524e0e.55f11",
+        "type": "ui_media",
+        "z": "a8fc729b.d16b6",
+        "group": "a8f50fc7.25306",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 1,
+        "category": "",
+        "file": "",
+        "layout": "center",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 650,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b6b91f8.19cce",
+        "type": "change",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mimetype",
+                "pt": "msg",
+                "to": "image/jpeg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 480,
+        "wires": [
+            [
+                "d2524e0e.55f11"
+            ]
+        ]
+    },
+    {
+        "id": "cdfb28fd.b99b98",
+        "type": "image-info",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "x": 470,
+        "y": 100,
+        "wires": [
+            [
+                "c8af1cc5.10363",
+                "dbc4e864.880d38"
+            ]
+        ]
+    },
+    {
+        "id": "c8af1cc5.10363",
+        "type": "debug",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 840,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "dbc4e864.880d38",
+        "type": "ui_text",
+        "z": "a8fc729b.d16b6",
+        "group": "a8f50fc7.25306",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Info",
+        "format": "Tipo: {{msg.type}}, Width: {{msg.width}}, Heigth: {{msg.height}}",
+        "layout": "row-spread",
+        "x": 820,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2efe28b4.0cc638",
+        "type": "mqtt out",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "topic": "raspberrypi/image",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 690,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c6447a15.ba5ad8",
+        "type": "ui_form",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "label": "Envia foto por email",
+        "group": "a8f50fc7.25306",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "email",
+                "value": "to",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "to": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 120,
+        "y": 580,
+        "wires": [
+            [
+                "4c82e0f9.03b28"
+            ]
+        ]
+    },
+    {
+        "id": "d72a2b0.d9aaed8",
+        "type": "function",
+        "z": "a8fc729b.d16b6",
+        "name": "Construye email",
+        "func": "\nmensaje = \"Imagen desde node red\";\ndestinatario = msg.destinatario.to;\nasunto = \"nueva imagen\";\n\nmsg = {\n    description: mensaje,\n    to: destinatario,\n    topic: asunto,\n    filename: \"image.jpg\",\n    payload: msg.payload\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 702,
+        "y": 580,
+        "wires": [
+            [
+                "5d0f02d3.5dfe7c",
+                "535184a.4e0f27c"
+            ]
+        ]
+    },
+    {
+        "id": "5d0f02d3.5dfe7c",
+        "type": "e-mail",
+        "z": "a8fc729b.d16b6",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "manda email",
+        "x": 892,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a91cbefe.f5546",
+        "type": "http request",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "http://www.aprendiendoarduino.com/servicios/imagen.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 530,
+        "y": 580,
+        "wires": [
+            [
+                "d72a2b0.d9aaed8"
+            ]
+        ]
+    },
+    {
+        "id": "535184a.4e0f27c",
+        "type": "debug",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 862,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "4c82e0f9.03b28",
+        "type": "change",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "destinatario",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "a91cbefe.f5546"
+            ]
+        ]
+    },
+    {
+        "id": "a8f50fc7.25306",
+        "type": "ui_group",
+        "z": "",
+        "name": "Foto",
+        "tab": "9611ae1e.e6517",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "760437d5.268b98",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "9611ae1e.e6517",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Imagenes",
+        "icon": "photo",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]
