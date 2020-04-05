@@ -1,0 +1,556 @@
+[
+    {
+        "id": "3d4d018.f951dfe",
+        "type": "tab",
+        "label": "Open Weather Map",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a7d86307.4bc63",
+        "type": "openweathermap",
+        "z": "3d4d018.f951dfe",
+        "name": "Pronostico",
+        "wtype": "forecast",
+        "lon": "",
+        "lat": "",
+        "city": "Logrono",
+        "country": "España",
+        "language": "en",
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "8147e6a4.5276c8",
+                "24fe5c98.8410a4",
+                "d730413f.200a8"
+            ]
+        ]
+    },
+    {
+        "id": "87ca6cce.d555f",
+        "type": "openweathermap in",
+        "z": "3d4d018.f951dfe",
+        "name": "Tiempo periodico",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "Logrono",
+        "country": "Spain",
+        "language": "es",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "8147e6a4.5276c8",
+                "24fe5c98.8410a4",
+                "fa781400.816b48",
+                "e2f50091.a0375",
+                "7ab68520.c0be4c"
+            ]
+        ]
+    },
+    {
+        "id": "8147e6a4.5276c8",
+        "type": "debug",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 540,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "720c4e52.1bbdc",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "Manda a grupo",
+        "func": "mensaje = msg.payload;\nchat = \"-1001252876433\"\n\nmsg.payload = {\n    content: mensaje,\n    chatId: chat,\n    type: \"message\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "694e5c5.f27b9a4"
+            ]
+        ]
+    },
+    {
+        "id": "694e5c5.f27b9a4",
+        "type": "telegram sender",
+        "z": "3d4d018.f951dfe",
+        "name": "Manda Mensaje",
+        "bot": "2f968c77.ffdb44",
+        "x": 640,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24fe5c98.8410a4",
+        "type": "json",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "720c4e52.1bbdc"
+            ]
+        ]
+    },
+    {
+        "id": "d4866c82.c6d2b",
+        "type": "inject",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 100,
+        "y": 120,
+        "wires": [
+            [
+                "a7d86307.4bc63"
+            ]
+        ]
+    },
+    {
+        "id": "b041bd9d.93a15",
+        "type": "ui_button",
+        "z": "3d4d018.f951dfe",
+        "name": "Manda predicción",
+        "group": "33d15ae1.0ffa86",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Pulsa para mandar predicción",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "a7d86307.4bc63"
+            ]
+        ]
+    },
+    {
+        "id": "dc6b2b00.a8c688",
+        "type": "ui_chart",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "5846d9cd.43c9e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "7",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38a24f34.93cdc",
+        "type": "ui_gauge",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "5846d9cd.43c9e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 630,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "fa781400.816b48",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "temperatura",
+        "func": "mensaje = msg.payload;\n\nmsg.payload = mensaje.tempc;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 440,
+        "wires": [
+            [
+                "dc6b2b00.a8c688",
+                "38a24f34.93cdc",
+                "9ab5a07e.f5f1c"
+            ]
+        ]
+    },
+    {
+        "id": "e2f50091.a0375",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "humedad",
+        "func": "mensaje = msg.payload;\n\nmsg.payload = mensaje.humidity;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 540,
+        "wires": [
+            [
+                "5bda2968.e46ea8",
+                "a3885c35.aaca3"
+            ]
+        ]
+    },
+    {
+        "id": "5bda2968.e46ea8",
+        "type": "ui_chart",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "5aa393de.9dc38c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "7",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3885c35.aaca3",
+        "type": "ui_gauge",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "5aa393de.9dc38c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 630,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "7ab68520.c0be4c",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "presion",
+        "func": "mensaje = msg.payload;\n\nmsg.payload = mensaje.pressure;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 640,
+        "wires": [
+            [
+                "a032fd37.4607f",
+                "a574b300.3bda5"
+            ]
+        ]
+    },
+    {
+        "id": "a032fd37.4607f",
+        "type": "ui_chart",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "c50f1ac7.710b18",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "7",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a574b300.3bda5",
+        "type": "ui_gauge",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "group": "c50f1ac7.710b18",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 630,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "9ab5a07e.f5f1c",
+        "type": "mqtt out",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "topic": "nodo1/temperatura",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 810,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d730413f.200a8",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "Construye email",
+        "func": "mensaje = msg.payload;\ndestinatario = \"aprendiendoraspberrypi@gmail.com\"\nasunto = \"Predicción del tiempo para Logroño\"\n\nmsg = {\n    payload: mensaje,\n    to: destinatario,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "1b745e2c.dedc72"
+            ]
+        ]
+    },
+    {
+        "id": "1b745e2c.dedc72",
+        "type": "e-mail",
+        "z": "3d4d018.f951dfe",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "aprendiendoraspberrypi@gmail.com",
+        "dname": "manda email",
+        "x": 790,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2f968c77.ffdb44",
+        "type": "telegram bot",
+        "z": "",
+        "botname": "aprendiendoarduino_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "3000",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "33d15ae1.0ffa86",
+        "type": "ui_group",
+        "z": "",
+        "name": "Predicción",
+        "tab": "e71160bc.8309d",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "5846d9cd.43c9e8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperatura",
+        "tab": "e71160bc.8309d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "5aa393de.9dc38c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Humedad",
+        "tab": "e71160bc.8309d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c50f1ac7.710b18",
+        "type": "ui_group",
+        "z": "",
+        "name": "Presión",
+        "tab": "e71160bc.8309d",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "760437d5.268b98",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "e71160bc.8309d",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Openweathermap",
+        "icon": "wb_sunny",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

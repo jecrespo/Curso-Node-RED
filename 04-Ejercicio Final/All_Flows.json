@@ -56,6 +56,13 @@
         "info": ""
     },
     {
+        "id": "a8fc729b.d16b6",
+        "type": "tab",
+        "label": "Ejercicio 5",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "358c49b6.c5d4e6",
         "type": "tab",
         "label": "Camara",
@@ -84,13 +91,6 @@
         "info": ""
     },
     {
-        "id": "414fdac6.e0c984",
-        "type": "tab",
-        "label": "Telegram",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "170f4718.6bac99",
         "type": "tab",
         "label": "Twitter",
@@ -101,6 +101,13 @@
         "id": "3d4d018.f951dfe",
         "type": "tab",
         "label": "Open Weather Map",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "414fdac6.e0c984",
+        "type": "tab",
+        "label": "Telegram",
         "disabled": false,
         "info": ""
     },
@@ -512,24 +519,6 @@
         "collapse": false
     },
     {
-        "id": "c6f008.f9b2bff8",
-        "type": "ui_group",
-        "z": "",
-        "name": "Secure",
-        "tab": "",
-        "disp": true,
-        "width": "6"
-    },
-    {
-        "id": "855a52ad.b762d",
-        "type": "ui_group",
-        "z": "",
-        "name": "pin",
-        "tab": "",
-        "disp": false,
-        "width": "1"
-    },
-    {
         "id": "9d10d93e.d7eb68",
         "type": "ui_group",
         "z": "",
@@ -544,7 +533,7 @@
         "id": "fdbd3f26.fb77",
         "type": "ui_tab",
         "z": "",
-        "name": "Email",
+        "name": "Email & SMS",
         "icon": "email",
         "order": 4,
         "disabled": false,
@@ -560,6 +549,48 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "b3747e83.b71dd",
+        "type": "ui_group",
+        "z": "",
+        "name": "Manda SMS",
+        "tab": "fdbd3f26.fb77",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9611ae1e.e6517",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Imagenes",
+        "icon": "photo",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a8f50fc7.25306",
+        "type": "ui_group",
+        "z": "",
+        "name": "Foto",
+        "tab": "9611ae1e.e6517",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "95398080.8036f",
+        "type": "MySQLdatabase",
+        "z": "",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "twitter",
+        "tz": ""
     },
     {
         "id": "e0ff63ff.4dd6c",
@@ -2262,8 +2293,8 @@
         "z": "170f4718.6bac99",
         "twitter": "e7868449.9e1228",
         "name": "Tweet",
-        "x": 430,
-        "y": 340,
+        "x": 410,
+        "y": 480,
         "wires": []
     },
     {
@@ -2287,14 +2318,14 @@
         "z": "170f4718.6bac99",
         "name": "",
         "topic": "",
-        "payload": "#aprendiendoarduino mensaje desde Node-RED. Led Encendido desde Telegram ",
+        "payload": "#aprendiendoarduino #rioja monitorizando hashtags",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 230,
-        "y": 320,
+        "x": 130,
+        "y": 480,
         "wires": [
             [
                 "cb76122d.f955a"
@@ -2355,7 +2386,8 @@
         "wires": [
             [
                 "8147e6a4.5276c8",
-                "24fe5c98.8410a4"
+                "24fe5c98.8410a4",
+                "d730413f.200a8"
             ]
         ]
     },
@@ -2567,7 +2599,8 @@
         "wires": [
             [
                 "dc6b2b00.a8c688",
-                "38a24f34.93cdc"
+                "38a24f34.93cdc",
+                "9ab5a07e.f5f1c"
             ]
         ]
     },
@@ -2847,7 +2880,7 @@
         "name": "",
         "scope": null,
         "x": 140,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
                 "c0cef62d.1d0a58"
@@ -2865,8 +2898,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 600,
-        "y": 460,
+        "x": 610,
+        "y": 540,
         "wires": []
     },
     {
@@ -3847,6 +3880,581 @@
             [
                 "2e5e63e3.a53eec"
             ]
+        ]
+    },
+    {
+        "id": "7b089f62.19c38",
+        "type": "ui_form",
+        "z": "c7f03f48.ec029",
+        "name": "",
+        "label": "",
+        "group": "b3747e83.b71dd",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Número Destinatario",
+                "value": "Destinatario",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Texto",
+                "value": "Texto",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Destinatario": "",
+            "Texto": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 250,
+        "y": 420,
+        "wires": [
+            [
+                "2a531901.80d356",
+                "d57f09ee.851c18"
+            ]
+        ]
+    },
+    {
+        "id": "2a531901.80d356",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "clear form",
+        "func": "mensaje = msg.payload.Texto;\ndestinatario = msg.payload.Destinatario;\n\nmsg.payload = {\n    Texto: \"\",\n    Destinatario: \"\",\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 520,
+        "wires": [
+            [
+                "7b089f62.19c38"
+            ]
+        ]
+    },
+    {
+        "id": "ca291b9f.5f38f8",
+        "type": "twilio out",
+        "z": "c7f03f48.ec029",
+        "twilio": "f744599.fffeca8",
+        "twilioType": "sms",
+        "url": "",
+        "number": "",
+        "name": "Manda SMS",
+        "x": 630,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d57f09ee.851c18",
+        "type": "function",
+        "z": "c7f03f48.ec029",
+        "name": "Construye SMS",
+        "func": "\nmensaje = msg.payload.Texto;\ndestinatario = \"+34\" + msg.payload.Destinatario;\n\nmsg = {\n    payload: mensaje,\n    topic: destinatario\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "ca291b9f.5f38f8"
+            ]
+        ]
+    },
+    {
+        "id": "4aa4dd74.ef8c04",
+        "type": "http request",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "http://www.aprendiendoarduino.com/servicios/imagen.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "91cafe4c.0a912",
+                "9b6b91f8.19cce",
+                "cdfb28fd.b99b98",
+                "2efe28b4.0cc638"
+            ]
+        ]
+    },
+    {
+        "id": "c7ceab15.a9bfd8",
+        "type": "inject",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "4aa4dd74.ef8c04"
+            ]
+        ]
+    },
+    {
+        "id": "91cafe4c.0a912",
+        "type": "image",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "x": 680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d2524e0e.55f11",
+        "type": "ui_media",
+        "z": "a8fc729b.d16b6",
+        "group": "a8f50fc7.25306",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 1,
+        "category": "",
+        "file": "",
+        "layout": "center",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 650,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b6b91f8.19cce",
+        "type": "change",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mimetype",
+                "pt": "msg",
+                "to": "image/jpeg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 480,
+        "wires": [
+            [
+                "d2524e0e.55f11"
+            ]
+        ]
+    },
+    {
+        "id": "cdfb28fd.b99b98",
+        "type": "image-info",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "x": 470,
+        "y": 100,
+        "wires": [
+            [
+                "c8af1cc5.10363",
+                "dbc4e864.880d38"
+            ]
+        ]
+    },
+    {
+        "id": "c8af1cc5.10363",
+        "type": "debug",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 840,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "dbc4e864.880d38",
+        "type": "ui_text",
+        "z": "a8fc729b.d16b6",
+        "group": "a8f50fc7.25306",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Info",
+        "format": "Tipo: {{msg.type}}, Width: {{msg.width}}, Heigth: {{msg.height}}",
+        "layout": "row-spread",
+        "x": 820,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2efe28b4.0cc638",
+        "type": "mqtt out",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "topic": "raspberrypi/image",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 690,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c6447a15.ba5ad8",
+        "type": "ui_form",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "label": "Envia foto por email",
+        "group": "a8f50fc7.25306",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "email",
+                "value": "to",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "to": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 120,
+        "y": 580,
+        "wires": [
+            [
+                "4c82e0f9.03b28"
+            ]
+        ]
+    },
+    {
+        "id": "d72a2b0.d9aaed8",
+        "type": "function",
+        "z": "a8fc729b.d16b6",
+        "name": "Construye email",
+        "func": "\nmensaje = \"Imagen desde node red\";\ndestinatario = msg.destinatario.to;\nasunto = \"nueva imagen\";\n\nmsg = {\n    description: mensaje,\n    to: destinatario,\n    topic: asunto,\n    filename: \"image.jpg\",\n    payload: msg.payload\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 702,
+        "y": 580,
+        "wires": [
+            [
+                "5d0f02d3.5dfe7c",
+                "535184a.4e0f27c"
+            ]
+        ]
+    },
+    {
+        "id": "5d0f02d3.5dfe7c",
+        "type": "e-mail",
+        "z": "a8fc729b.d16b6",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "manda email",
+        "x": 892,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a91cbefe.f5546",
+        "type": "http request",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "http://www.aprendiendoarduino.com/servicios/imagen.jpg",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 530,
+        "y": 580,
+        "wires": [
+            [
+                "d72a2b0.d9aaed8"
+            ]
+        ]
+    },
+    {
+        "id": "535184a.4e0f27c",
+        "type": "debug",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 862,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "4c82e0f9.03b28",
+        "type": "change",
+        "z": "a8fc729b.d16b6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "destinatario",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "a91cbefe.f5546"
+            ]
+        ]
+    },
+    {
+        "id": "79a269d0.356e28",
+        "type": "catch",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 140,
+        "y": 591,
+        "wires": [
+            [
+                "115e82e2.737dcd"
+            ]
+        ]
+    },
+    {
+        "id": "115e82e2.737dcd",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 610,
+        "y": 591,
+        "wires": []
+    },
+    {
+        "id": "ddb8099b.739728",
+        "type": "twitter in",
+        "z": "170f4718.6bac99",
+        "twitter": "e7868449.9e1228",
+        "tags": "#Rioja",
+        "user": "false",
+        "name": "Busca Rioja",
+        "inputs": 0,
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "847f9cc4.7f346",
+                "b16a4769.c23618",
+                "d7f3f281.48d8f",
+                "a53ddb10.7c2cc8"
+            ]
+        ]
+    },
+    {
+        "id": "9dad8100.abebd",
+        "type": "mysql",
+        "z": "170f4718.6bac99",
+        "mydb": "95398080.8036f",
+        "name": "",
+        "x": 700,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7f3f281.48d8f",
+        "type": "function",
+        "z": "170f4718.6bac99",
+        "name": "Insertar",
+        "func": "texto = msg.tweet.text;\nlocalizacion = msg.location.place;\nusuario = msg.tweet.user.screen_name\n\nmsg.topic = \"INSERT INTO `larioja` (`Texto`, `Localizacion`, `Usuario`) VALUES ('\" + texto + \"', '\" + localizacion + \"', '\" + usuario + \"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "9dad8100.abebd",
+                "1a041476.4d1c0c"
+            ]
+        ]
+    },
+    {
+        "id": "847f9cc4.7f346",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 330,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b16a4769.c23618",
+        "type": "mqtt out",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "topic": "/rioja",
+        "qos": "0",
+        "retain": "false",
+        "broker": "53b63cd3.a25164",
+        "x": 330,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1a041476.4d1c0c",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 680,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9ab5a07e.f5f1c",
+        "type": "mqtt out",
+        "z": "3d4d018.f951dfe",
+        "name": "",
+        "topic": "nodo1/temperatura",
+        "qos": "",
+        "retain": "",
+        "broker": "760437d5.268b98",
+        "x": 810,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d730413f.200a8",
+        "type": "function",
+        "z": "3d4d018.f951dfe",
+        "name": "Construye email",
+        "func": "mensaje = msg.payload;\ndestinatario = \"aprendiendoraspberrypi@gmail.com\"\nasunto = \"Predicción del tiempo para Logroño\"\n\nmsg = {\n    payload: mensaje,\n    to: destinatario,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 80,
+        "wires": [
+            [
+                "1b745e2c.dedc72"
+            ]
+        ]
+    },
+    {
+        "id": "1b745e2c.dedc72",
+        "type": "e-mail",
+        "z": "3d4d018.f951dfe",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "aprendiendoraspberrypi@gmail.com",
+        "dname": "manda email",
+        "x": 790,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a53ddb10.7c2cc8",
+        "type": "function",
+        "z": "170f4718.6bac99",
+        "name": "Manda a grupo",
+        "func": "mensaje = msg.payload;\nchat = \"-1001252876433\"\n\nmsg.payload = {\n    content: mensaje,\n    chatId: chat,\n    type: \"message\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "b6fef66d.823468"
+            ]
+        ]
+    },
+    {
+        "id": "b6fef66d.823468",
+        "type": "telegram sender",
+        "z": "170f4718.6bac99",
+        "name": "Manda Mensaje",
+        "bot": "2f968c77.ffdb44",
+        "x": 820,
+        "y": 460,
+        "wires": [
+            []
         ]
     }
 ]

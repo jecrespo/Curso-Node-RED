@@ -1,0 +1,345 @@
+[
+    {
+        "id": "170f4718.6bac99",
+        "type": "tab",
+        "label": "Twitter",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9575ee44.cf12a",
+        "type": "twitter in",
+        "z": "170f4718.6bac99",
+        "twitter": "",
+        "tags": "#aprendiendoarduino",
+        "user": "false",
+        "name": "#aprendiendoarduino",
+        "inputs": 1,
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "4e9d9acf.549c24",
+                "a285dad3.9380a8"
+            ]
+        ]
+    },
+    {
+        "id": "cb76122d.f955a",
+        "type": "twitter out",
+        "z": "170f4718.6bac99",
+        "twitter": "",
+        "name": "Tweet",
+        "x": 410,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4e9d9acf.549c24",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 540,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "6ee9e85e.4bd728",
+        "type": "inject",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "topic": "",
+        "payload": "#aprendiendoarduino #rioja monitorizando hashtags",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "cb76122d.f955a"
+            ]
+        ]
+    },
+    {
+        "id": "309143e8.ea68ec",
+        "type": "comment",
+        "z": "170f4718.6bac99",
+        "name": "Si alguien tuitea #aprendiendoarduino me manda un mensaje a Telegram",
+        "info": "",
+        "x": 400,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c3fbb0eb.d2b8e",
+        "type": "telegram sender",
+        "z": "170f4718.6bac99",
+        "name": "Manda Mensaje",
+        "bot": "2f968c77.ffdb44",
+        "x": 740,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a285dad3.9380a8",
+        "type": "function",
+        "z": "170f4718.6bac99",
+        "name": "Manda a canal",
+        "func": "mensaje = \"Mensaje recibido de Twitter: \" + msg.payload;\nchat = \"-1001402638286\"\n\nmsg.payload = {\n    content: mensaje,\n    chatId: chat,\n    type: \"message\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 260,
+        "wires": [
+            [
+                "c3fbb0eb.d2b8e"
+            ]
+        ]
+    },
+    {
+        "id": "16b41845.297298",
+        "type": "status",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "c0cef62d.1d0a58"
+            ]
+        ]
+    },
+    {
+        "id": "c0cef62d.1d0a58",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 610,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "79a269d0.356e28",
+        "type": "catch",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 140,
+        "y": 591,
+        "wires": [
+            [
+                "115e82e2.737dcd"
+            ]
+        ]
+    },
+    {
+        "id": "115e82e2.737dcd",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 610,
+        "y": 591,
+        "wires": []
+    },
+    {
+        "id": "ddb8099b.739728",
+        "type": "twitter in",
+        "z": "170f4718.6bac99",
+        "twitter": "",
+        "tags": "#Rioja",
+        "user": "false",
+        "name": "Busca Rioja",
+        "inputs": 0,
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "847f9cc4.7f346",
+                "b16a4769.c23618",
+                "d7f3f281.48d8f",
+                "a53ddb10.7c2cc8"
+            ]
+        ]
+    },
+    {
+        "id": "9dad8100.abebd",
+        "type": "mysql",
+        "z": "170f4718.6bac99",
+        "mydb": "95398080.8036f",
+        "name": "",
+        "x": 700,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7f3f281.48d8f",
+        "type": "function",
+        "z": "170f4718.6bac99",
+        "name": "Insertar",
+        "func": "texto = msg.tweet.text;\nlocalizacion = msg.location.place;\nusuario = msg.tweet.user.screen_name\n\nmsg.topic = \"INSERT INTO `larioja` (`Texto`, `Localizacion`, `Usuario`) VALUES ('\" + texto + \"', '\" + localizacion + \"', '\" + usuario + \"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "9dad8100.abebd",
+                "1a041476.4d1c0c"
+            ]
+        ]
+    },
+    {
+        "id": "847f9cc4.7f346",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 330,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b16a4769.c23618",
+        "type": "mqtt out",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "topic": "/rioja",
+        "qos": "0",
+        "retain": "false",
+        "broker": "53b63cd3.a25164",
+        "x": 330,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1a041476.4d1c0c",
+        "type": "debug",
+        "z": "170f4718.6bac99",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 680,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a53ddb10.7c2cc8",
+        "type": "function",
+        "z": "170f4718.6bac99",
+        "name": "Manda a grupo",
+        "func": "mensaje = msg.payload;\nchat = \"-1001252876433\"\n\nmsg.payload = {\n    content: mensaje,\n    chatId: chat,\n    type: \"message\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "b6fef66d.823468"
+            ]
+        ]
+    },
+    {
+        "id": "b6fef66d.823468",
+        "type": "telegram sender",
+        "z": "170f4718.6bac99",
+        "name": "Manda Mensaje",
+        "bot": "2f968c77.ffdb44",
+        "x": 820,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f968c77.ffdb44",
+        "type": "telegram bot",
+        "z": "",
+        "botname": "aprendiendoarduino_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "3000",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "95398080.8036f",
+        "type": "MySQLdatabase",
+        "z": "",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "twitter",
+        "tz": ""
+    },
+    {
+        "id": "53b63cd3.a25164",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "CloudMQTT",
+        "broker": "m20.cloudmqtt.com",
+        "port": "10488",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
