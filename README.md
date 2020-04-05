@@ -33,3 +33,12 @@ Más información: https://www.aprendiendoarduino.com/
 
 ![dashboard1](04-Ejercicio%20Final/Ejercicio_5/Ejercicio_5-Flow.png)
 
+
+## Ejercicio 6
+![dashboard1](04-Ejercicio%20Final/Ejercicio_6/Ejercicio_6-Flow.png)
+
+
+## Ejercicio 7
+![dashboard1](04-Ejercicio%20Final/Ejercicio_7/Ejercicio_7-Dashboard.png)
+
+![dashboard1](04-Ejercicio%20Final/Ejercicio_7/Ejercicio_7-Flow.png)
