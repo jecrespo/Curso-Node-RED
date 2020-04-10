@@ -1,0 +1,249 @@
+[
+    {
+        "id": "7e76b20c.feda1c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "380b46d1.faccda",
+        "type": "inject",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "e6f661e3.955f1"
+            ]
+        ]
+    },
+    {
+        "id": "96993db2.3144c",
+        "type": "ui_text",
+        "z": "7e76b20c.feda1c",
+        "group": "6eca7416.97000c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 770,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "852b1301.16c69",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "0",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "3",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "a59636fe.82cbd8",
+                "794e269c.451068",
+                "112f077b.cadd29"
+            ]
+        ]
+    },
+    {
+        "id": "a59636fe.82cbd8",
+        "type": "image",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "x": 740,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "eb79af88.15435",
+        "type": "ui_media",
+        "z": "7e76b20c.feda1c",
+        "group": "f9d49280.70b96",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 0,
+        "category": "",
+        "file": "",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 750,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ef78e94.a08c5",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e6f661e3.955f1",
+        "type": "moment",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Madrid",
+        "adjAmount": "2",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "",
+        "locale": "es_ES",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Madrid",
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "96993db2.3144c",
+                "4ef78e94.a08c5"
+            ]
+        ]
+    },
+    {
+        "id": "c517f550.6a31b8",
+        "type": "inject",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "852b1301.16c69"
+            ]
+        ]
+    },
+    {
+        "id": "794e269c.451068",
+        "type": "image-info",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "4ef78e94.a08c5"
+            ]
+        ]
+    },
+    {
+        "id": "112f077b.cadd29",
+        "type": "change",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mimetype",
+                "pt": "msg",
+                "to": "image/jpeg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "eb79af88.15435"
+            ]
+        ]
+    },
+    {
+        "id": "6eca7416.97000c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Fecha y Hora",
+        "tab": "a63f4d0d.ac0d1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f9d49280.70b96",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pi Camera",
+        "tab": "a63f4d0d.ac0d1",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a63f4d0d.ac0d1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "home",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
