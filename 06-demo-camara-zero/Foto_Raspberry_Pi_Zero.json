@@ -1,12 +1,5 @@
 [
     {
-        "id": "7e76b20c.feda1c",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "380b46d1.faccda",
         "type": "inject",
         "z": "7e76b20c.feda1c",
@@ -14,7 +7,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "repeat": "20",
+        "repeat": "30",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
@@ -23,6 +16,32 @@
         "wires": [
             [
                 "e6f661e3.955f1"
+            ]
+        ]
+    },
+    {
+        "id": "e6f661e3.955f1",
+        "type": "moment",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Madrid",
+        "adjAmount": "2",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "",
+        "locale": "es_ES",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Madrid",
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "96993db2.3144c",
+                "4ef78e94.a08c5"
             ]
         ]
     },
@@ -38,9 +57,37 @@
         "label": "",
         "format": "{{msg.payload}}",
         "layout": "row-left",
-        "x": 770,
+        "x": 750,
         "y": 180,
         "wires": []
+    },
+    {
+        "id": "4ef78e94.a08c5",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "794e269c.451068",
+        "type": "image-info",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "4ef78e94.a08c5"
+            ]
+        ]
     },
     {
         "id": "852b1301.16c69",
@@ -51,7 +98,7 @@
         "filedefpath": "1",
         "filepath": "",
         "fileformat": "jpeg",
-        "resolution": "3",
+        "resolution": "9",
         "rotation": "0",
         "fliph": "0",
         "flipv": "0",
@@ -91,103 +138,6 @@
         "wires": []
     },
     {
-        "id": "eb79af88.15435",
-        "type": "ui_media",
-        "z": "7e76b20c.feda1c",
-        "group": "f9d49280.70b96",
-        "name": "",
-        "width": 0,
-        "height": 0,
-        "order": 0,
-        "category": "",
-        "file": "",
-        "layout": "adjust",
-        "showcontrols": true,
-        "loop": true,
-        "onstart": false,
-        "scope": "local",
-        "tooltip": "",
-        "x": 750,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4ef78e94.a08c5",
-        "type": "debug",
-        "z": "7e76b20c.feda1c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 770,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "e6f661e3.955f1",
-        "type": "moment",
-        "z": "7e76b20c.feda1c",
-        "name": "",
-        "topic": "",
-        "input": "",
-        "inputType": "msg",
-        "inTz": "Europe/Madrid",
-        "adjAmount": "2",
-        "adjType": "hours",
-        "adjDir": "add",
-        "format": "",
-        "locale": "es_ES",
-        "output": "",
-        "outputType": "msg",
-        "outTz": "Europe/Madrid",
-        "x": 440,
-        "y": 180,
-        "wires": [
-            [
-                "96993db2.3144c",
-                "4ef78e94.a08c5"
-            ]
-        ]
-    },
-    {
-        "id": "c517f550.6a31b8",
-        "type": "inject",
-        "z": "7e76b20c.feda1c",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "20",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "x": 170,
-        "y": 300,
-        "wires": [
-            [
-                "852b1301.16c69"
-            ]
-        ]
-    },
-    {
-        "id": "794e269c.451068",
-        "type": "image-info",
-        "z": "7e76b20c.feda1c",
-        "name": "",
-        "x": 590,
-        "y": 240,
-        "wires": [
-            [
-                "4ef78e94.a08c5"
-            ]
-        ]
-    },
-    {
         "id": "112f077b.cadd29",
         "type": "change",
         "z": "7e76b20c.feda1c",
@@ -207,11 +157,54 @@
         "to": "",
         "reg": false,
         "x": 570,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
                 "eb79af88.15435"
             ]
+        ]
+    },
+    {
+        "id": "c517f550.6a31b8",
+        "type": "inject",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "852b1301.16c69"
+            ]
+        ]
+    },
+    {
+        "id": "eb79af88.15435",
+        "type": "ui_media",
+        "z": "7e76b20c.feda1c",
+        "group": "f9d49280.70b96",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 0,
+        "category": "",
+        "file": "",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 750,
+        "y": 480,
+        "wires": [
+            []
         ]
     },
     {
@@ -233,7 +226,7 @@
         "tab": "a63f4d0d.ac0d1",
         "order": 2,
         "disp": true,
-        "width": "6",
+        "width": "12",
         "collapse": false
     },
     {
