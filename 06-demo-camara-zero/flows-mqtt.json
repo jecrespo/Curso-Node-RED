@@ -1,0 +1,86 @@
+[
+    {
+        "id": "dfbb37cf.44f8c8",
+        "type": "mqtt in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/bot",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "8579193.97411e8",
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "b0f0ef4f.8c8f2"
+            ]
+        ]
+    },
+    {
+        "id": "b0f0ef4f.8c8f2",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "0",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "6970b871.3e1f78"
+            ]
+        ]
+    },
+    {
+        "id": "6970b871.3e1f78",
+        "type": "mqtt out",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/imagen",
+        "qos": "",
+        "retain": "",
+        "broker": "8579193.97411e8",
+        "x": 510,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "8579193.97411e8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "m20.cloudmqtt.com",
+        "port": "10488",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

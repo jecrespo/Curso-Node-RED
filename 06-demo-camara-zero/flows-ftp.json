@@ -1,0 +1,117 @@
+[
+    {
+        "id": "9e39930.c09d27",
+        "type": "mqtt in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/guarda",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "8579193.97411e8",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "36050119.8344fe"
+            ]
+        ]
+    },
+    {
+        "id": "36050119.8344fe",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "1",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "4",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 400,
+        "y": 460,
+        "wires": [
+            [
+                "76d1ef80.61641"
+            ]
+        ]
+    },
+    {
+        "id": "76d1ef80.61641",
+        "type": "ftp in",
+        "z": "7e76b20c.feda1c",
+        "ftp": "63587001.34ea8",
+        "operation": "put",
+        "filename": "html/servicios/imagen.jpg",
+        "localFilename": "/home/pi/Pictures/imagen.jpg",
+        "name": "",
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "8f271cf5.902fe"
+            ]
+        ]
+    },
+    {
+        "id": "8f271cf5.902fe",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8579193.97411e8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "m20.cloudmqtt.com",
+        "port": "10488",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "63587001.34ea8",
+        "type": "ftp",
+        "z": "",
+        "host": "aprendiendoarduino.com",
+        "port": "",
+        "secureOptions": "",
+        "user": "aprendiendoarduino.com",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": ""
+    }
+]
