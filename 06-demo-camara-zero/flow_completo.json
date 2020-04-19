@@ -1,0 +1,586 @@
+[
+    {
+        "id": "7e76b20c.feda1c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "380b46d1.faccda",
+        "type": "inject",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 20,
+        "wires": [
+            [
+                "e6f661e3.955f1"
+            ]
+        ]
+    },
+    {
+        "id": "96993db2.3144c",
+        "type": "ui_text",
+        "z": "7e76b20c.feda1c",
+        "group": "6eca7416.97000c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 730,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "852b1301.16c69",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "0",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "9",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "a59636fe.82cbd8",
+                "794e269c.451068",
+                "112f077b.cadd29"
+            ]
+        ]
+    },
+    {
+        "id": "a59636fe.82cbd8",
+        "type": "image",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "x": 720,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "eb79af88.15435",
+        "type": "ui_media",
+        "z": "7e76b20c.feda1c",
+        "group": "f9d49280.70b96",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 0,
+        "category": "",
+        "file": "",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 730,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ef78e94.a08c5",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 750,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e6f661e3.955f1",
+        "type": "moment",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Madrid",
+        "adjAmount": "2",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "",
+        "locale": "es_ES",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Madrid",
+        "x": 420,
+        "y": 20,
+        "wires": [
+            [
+                "96993db2.3144c",
+                "4ef78e94.a08c5"
+            ]
+        ]
+    },
+    {
+        "id": "c517f550.6a31b8",
+        "type": "inject",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "852b1301.16c69"
+            ]
+        ]
+    },
+    {
+        "id": "794e269c.451068",
+        "type": "image-info",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "4ef78e94.a08c5"
+            ]
+        ]
+    },
+    {
+        "id": "112f077b.cadd29",
+        "type": "change",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mimetype",
+                "pt": "msg",
+                "to": "image/jpeg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 320,
+        "wires": [
+            [
+                "eb79af88.15435"
+            ]
+        ]
+    },
+    {
+        "id": "dfbb37cf.44f8c8",
+        "type": "mqtt in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/bot",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "8579193.97411e8",
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "b0f0ef4f.8c8f2"
+            ]
+        ]
+    },
+    {
+        "id": "b0f0ef4f.8c8f2",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "0",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "6970b871.3e1f78",
+                "4993ce.ea3c3c34"
+            ]
+        ]
+    },
+    {
+        "id": "6970b871.3e1f78",
+        "type": "mqtt out",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/imagen",
+        "qos": "",
+        "retain": "",
+        "broker": "8579193.97411e8",
+        "x": 750,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1d8caa4f.fe5796",
+        "type": "catch",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 140,
+        "y": 660,
+        "wires": [
+            [
+                "e183276e.8ea0b8"
+            ]
+        ]
+    },
+    {
+        "id": "fb565411.abf678",
+        "type": "status",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "scope": null,
+        "x": 140,
+        "y": 600,
+        "wires": [
+            [
+                "f0c69262.c292"
+            ]
+        ]
+    },
+    {
+        "id": "f0c69262.c292",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 500,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e183276e.8ea0b8",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 500,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "9e39930.c09d27",
+        "type": "mqtt in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/guarda",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "8579193.97411e8",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "36050119.8344fe"
+            ]
+        ]
+    },
+    {
+        "id": "36050119.8344fe",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "1",
+        "filename": "imagen.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "4",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 400,
+        "y": 460,
+        "wires": [
+            [
+                "76d1ef80.61641",
+                "93b83bee.c43428"
+            ]
+        ]
+    },
+    {
+        "id": "76d1ef80.61641",
+        "type": "ftp in",
+        "z": "7e76b20c.feda1c",
+        "ftp": "63587001.34ea8",
+        "operation": "put",
+        "filename": "html/servicios/imagen.jpg",
+        "localFilename": "/home/pi/Pictures/imagen.jpg",
+        "name": "",
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "8f271cf5.902fe"
+            ]
+        ]
+    },
+    {
+        "id": "8f271cf5.902fe",
+        "type": "debug",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f75c29a9.0374c8",
+        "type": "camerapi-takephoto",
+        "z": "7e76b20c.feda1c",
+        "filemode": "1",
+        "filename": "imagen_full.jpg",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "10",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "",
+        "x": 360,
+        "y": 520,
+        "wires": [
+            [
+                "2ba86172.2fb1ee"
+            ]
+        ]
+    },
+    {
+        "id": "fe4e4068.daa14",
+        "type": "mqtt in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "topic": "foto/guarda_full",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "8579193.97411e8",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "f75c29a9.0374c8"
+            ]
+        ]
+    },
+    {
+        "id": "4993ce.ea3c3c34",
+        "type": "e-mail",
+        "z": "7e76b20c.feda1c",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "aprendiendoraspberrypi@gmail.com",
+        "dname": "",
+        "x": 930,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "93b83bee.c43428",
+        "type": "file in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "filename": "/home/pi/Pictures/imagen.jpg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 610,
+        "y": 520,
+        "wires": [
+            [
+                "4993ce.ea3c3c34"
+            ]
+        ]
+    },
+    {
+        "id": "2ba86172.2fb1ee",
+        "type": "file in",
+        "z": "7e76b20c.feda1c",
+        "name": "",
+        "filename": "/home/pi/Pictures/imagen_full.jpg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 620,
+        "y": 560,
+        "wires": [
+            [
+                "4993ce.ea3c3c34"
+            ]
+        ]
+    },
+    {
+        "id": "6eca7416.97000c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Fecha y Hora",
+        "tab": "a63f4d0d.ac0d1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f9d49280.70b96",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pi Camera",
+        "tab": "a63f4d0d.ac0d1",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "8579193.97411e8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "m20.cloudmqtt.com",
+        "port": "10488",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "63587001.34ea8",
+        "type": "ftp",
+        "z": "",
+        "host": "aprendiendoarduino.com",
+        "port": "",
+        "secureOptions": "",
+        "user": "aprendiendoarduino.com",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": ""
+    },
+    {
+        "id": "a63f4d0d.ac0d1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "home",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
