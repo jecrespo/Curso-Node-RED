@@ -1,0 +1,512 @@
+[
+    {
+        "id": "a10c3d95.6d6d7",
+        "type": "tab",
+        "label": "Scan Subnet for Devices",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d2dabdfd.248c2",
+        "type": "inject",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "61a98c25.9cc194",
+                "383189fc.a01e36"
+            ]
+        ]
+    },
+    {
+        "id": "61a98c25.9cc194",
+        "type": "exec",
+        "z": "a10c3d95.6d6d7",
+        "command": "sudo nmap -sn 192.168.1.0/24 | awk '/Nmap scan report for/{printf $5;}/MAC Address:/{print \"|\"substr($0, index($0,$3)) }' | sort",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "scan subnet",
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "4860170.e64c1e8",
+                "c3139b6d.4ed308",
+                "6c0f96ab.f20e18"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4860170.e64c1e8",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Subnet Devices Array",
+        "func": "let response = msg.payload.split('\\n');\nlet founds = [];\nlet news = [];\nlet changes = [];\nlet unknowns = [];\nlet device;\nvar msg2 = {};\nvar msg3 = {};\nvar msg4 = {};\nresponse.pop()  //quito el último elemento que es vacio\n//node.warn(response);\n\n//solo las nuevas macs o ip diferente en mac la mando para procesar\n\nresponse.forEach ( line => {\n    if ( line.indexOf('|') > -1 ){\n        device = {\n            ip : line.split('|')[0],\n            mac: line.split('|')[1].split(' ')[0],\n            brand: line.split('|')[1].split(' ').slice(1).join(\" \")\n        };\n        ip_ad = flow.get(device.mac);\n        //node.warn(ip_ad);\n        if (ip_ad === undefined){\n            news.push(device);  //IPs nuevas no están en las variables, actualizo fecha\n        }\n        else if (ip_ad == device.ip){\n            founds.push(device);    //IPs existentes inserto\n        }\n        else {\n            changes.push(device);   //IPs cambiadas actualizo e inserto en historico\n        }\n    }\n    else {\n         device = {\n            ip : line,   //dispositivo propio o sin MAC disponible\n            mac: null,\n            brand: null\n         };\n         ip_scan = flow.get(\"scan_device\");\n         if (ip_scan == device.ip){\n            device.mac = \"scan_device\";\n            founds.push (device);   //se trata del dispositivo que scanea\n         }\n         else {\n            device.mac = \"unknown\";  //dispositivos sin mac desconocidos o cambiada IP dispositivo escaneo, inserto y aviso\n            unknowns.push(device);\n         }\n        \n    }\n})\nmsg.payload = founds;\nmsg2.payload = news;\nmsg3.payload = changes;\nmsg4.payload = unknowns;\nreturn [msg,msg2,msg3,msg4];",
+        "outputs": 4,
+        "noerr": 0,
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "e133033f.18ec3",
+                "79e42014.88ced"
+            ],
+            [
+                "6cd1ae57.7f064",
+                "dd761a26.6d9b48"
+            ],
+            [
+                "2cec58f2.ec4078",
+                "ea4f502e.3f4d3"
+            ],
+            [
+                "11bf6fc8.21c1",
+                "bd2900fc.133d3"
+            ]
+        ],
+        "outputLabels": [
+            "encontrados",
+            "nuevos",
+            "cambios",
+            "desconocidos"
+        ]
+    },
+    {
+        "id": "e133033f.18ec3",
+        "type": "split",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "payload",
+        "x": 750,
+        "y": 200,
+        "wires": [
+            [
+                "2c53545a.08d6ec"
+            ]
+        ]
+    },
+    {
+        "id": "5197f5f1.aa45bc",
+        "type": "mysql",
+        "z": "a10c3d95.6d6d7",
+        "mydb": "37a53f0.1c93dc2",
+        "name": "",
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "d5afa2f3.612ed"
+            ]
+        ]
+    },
+    {
+        "id": "2c53545a.08d6ec",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Actualizo",
+        "func": "mac = msg.payload.mac;\n\nmsg.topic = \"UPDATE `dispositivos` SET `fecha_detectado` =  CURRENT_TIMESTAMP WHERE `MAC` = '\" + mac + \"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "d44c4429.a0c478"
+            ]
+        ]
+    },
+    {
+        "id": "6c0f96ab.f20e18",
+        "type": "ui_text",
+        "z": "a10c3d95.6d6d7",
+        "group": "1ed759dd.5eb696",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 750,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "36f415ce.b4426a",
+        "type": "comment",
+        "z": "a10c3d95.6d6d7",
+        "name": "Scanea la red y guarda los dispositivos en una BBDD. Manda alerta para nuevos dispositivos y cambios de IP",
+        "info": "También manda avisos cuando se detecta un nuevo dispositivo",
+        "x": 450,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c55fbc14.b7276",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "select",
+        "func": "msg.topic = \"SELECT `MAC`, `IP` FROM `dispositivos`\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "5197f5f1.aa45bc"
+            ]
+        ]
+    },
+    {
+        "id": "d5afa2f3.612ed",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "MACs to variable flow",
+        "func": "//paso a variables de contexto las macs e ips\n\nvar datos = msg.payload;\n//node.warn(datos);\n\n\ndatos.forEach(element => {\n    mac = element.MAC;\n    ip = element.IP;\n    flow.set(mac,ip);\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 710,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79e42014.88ced",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "11bf6fc8.21c1",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2cec58f2.ec4078",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6cd1ae57.7f064",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c3139b6d.4ed308",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 490,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "c63e5461.3fc788",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "inserta",
+        "func": "ip = msg.payload.ip;\nmac = msg.payload.mac;\nbrand = msg.payload.brand;\n\nmsg.topic = \"INSERT INTO `dispositivos` (`MAC`, `IP`, `Vendor`) VALUES ('\" + mac + \"', '\" + ip + \"', '\" + brand + \"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "d44c4429.a0c478",
+                "df418ac4.b060f8"
+            ]
+        ]
+    },
+    {
+        "id": "dd761a26.6d9b48",
+        "type": "split",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "payload",
+        "x": 750,
+        "y": 240,
+        "wires": [
+            [
+                "c63e5461.3fc788"
+            ]
+        ]
+    },
+    {
+        "id": "d44c4429.a0c478",
+        "type": "mysql",
+        "z": "a10c3d95.6d6d7",
+        "mydb": "37a53f0.1c93dc2",
+        "name": "",
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "3396ae57.30a072"
+            ]
+        ]
+    },
+    {
+        "id": "3396ae57.30a072",
+        "type": "debug",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 550,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "df418ac4.b060f8",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Construye email",
+        "func": "asunto = \"Nuevo dispositivo detectado en red de casa\";\nmensaje = \"Nuevo dispositivo detectado en red de casa con\\n IP: \" + msg.payload.ip +\n\"\\nMAC: \" + msg.payload.mac + \"\\nmarca: \" + msg.payload.brand;\n\nmsg = {\n    payload: mensaje,\n    topic: asunto\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 380,
+        "wires": [
+            [
+                "fe13422c.9ae63"
+            ]
+        ]
+    },
+    {
+        "id": "fe13422c.9ae63",
+        "type": "e-mail",
+        "z": "a10c3d95.6d6d7",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "jecrespom@gmail.com",
+        "dname": "manda email alerta",
+        "x": 610,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ea4f502e.3f4d3",
+        "type": "split",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "payload",
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "1f7d1e70.ba2682"
+            ]
+        ]
+    },
+    {
+        "id": "1f7d1e70.ba2682",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Actualizo e inserto",
+        "func": "var msg2 = {};\nlet ip_ant = flow.get(msg.payload.mac)\n\n\nmac = msg.payload.mac;\nip = msg.payload.ip;\nbrand = msg.payload.brand;\n\nmsg.topic = \"UPDATE `dispositivos` SET `IP` =  '\" + ip + \"', `Vendor` = '\" + brand + \"' WHERE `MAC` = '\" + mac + \"'\";\nmsg2.topic = \"INSERT INTO `historico` (`MAC`, `IP_Antigua`, `IP_Nueva`) VALUES ('\" + mac + \"', '\" + ip_ant + \"', '\" + ip + \"')\";\n\nreturn [msg,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "fd1c4555.db7b08",
+                "d44c4429.a0c478"
+            ],
+            [
+                "d44c4429.a0c478"
+            ]
+        ]
+    },
+    {
+        "id": "fd1c4555.db7b08",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Construye email",
+        "func": "let ip_ant = flow.get(msg.payload.mac)\n\nasunto = \"Cambio IP en dispositivo red de casa\";\nmensaje = \"Cambio dispositivo en red de casa con\\n MAC: \" + msg.payload.mac +\n\"\\nNueva IP: \" + msg.payload.ip + \"\\nmarca: \" + msg.payload.brand +\n\"\\nAntigua IP: \" + ip_ant;\n\nmsg = {\n    payload: mensaje,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "fe13422c.9ae63"
+            ]
+        ]
+    },
+    {
+        "id": "ab8717be.74f648",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "inserta",
+        "func": "ip = msg.payload.ip;\nmac = msg.payload.mac;\nbrand = msg.payload.brand;\n\nmsg.topic = \"INSERT INTO `dispositivos` (`MAC`, `IP`, `Vendor`) VALUES ('\" + mac + \"', '\" + ip + \"', '\" + brand + \"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "1857e7c7.3a0218",
+                "d44c4429.a0c478"
+            ]
+        ]
+    },
+    {
+        "id": "bd2900fc.133d3",
+        "type": "split",
+        "z": "a10c3d95.6d6d7",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "payload",
+        "x": 750,
+        "y": 320,
+        "wires": [
+            [
+                "ab8717be.74f648"
+            ]
+        ]
+    },
+    {
+        "id": "1857e7c7.3a0218",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Construye email",
+        "func": "asunto = \"ATENCIÓN!!! Dispositivo desconocido en la red\";\nmensaje = \"ATENCIÓN!!! Dispositivo desconocido en la red, revisar urgentemente.\\n MAC: \" + msg.payload.mac +\n\"\\nIP: \" + msg.payload.ip;\n\nmsg = {\n    payload: mensaje,\n    topic: asunto\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 500,
+        "wires": [
+            [
+                "fe13422c.9ae63"
+            ]
+        ]
+    },
+    {
+        "id": "383189fc.a01e36",
+        "type": "function",
+        "z": "a10c3d95.6d6d7",
+        "name": "Borra todas las variables de flow",
+        "func": "//Borro para actualizar segun la BBDD, dos métodos\n//context.set(\"age\",undefined)\n\nvar keys = flow.keys()\n\nkeys.forEach(element => flow.set(element,undefined));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 220,
+        "y": 180,
+        "wires": [
+            [
+                "c55fbc14.b7276"
+            ]
+        ]
+    },
+    {
+        "id": "37a53f0.1c93dc2",
+        "type": "MySQLdatabase",
+        "z": "",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "Dispositivos_Red",
+        "tz": ""
+    },
+    {
+        "id": "1ed759dd.5eb696",
+        "type": "ui_group",
+        "z": "",
+        "name": "Dispositivos",
+        "tab": "d291beb3.0ced1",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "d291beb3.0ced1",
+        "type": "ui_tab",
+        "z": "",
+        "name": "dispositivos",
+        "icon": "wifi",
+        "order": 11,
+        "disabled": false,
+        "hidden": false
+    }
+]
