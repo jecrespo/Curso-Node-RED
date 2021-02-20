@@ -5,14 +5,20 @@
    En cada reset publica un mensaje indicando que se ha reiniciado
 */
 
+/* secrets.h
+  #define SSID "......."
+  #define PASSWORD "......"
+  #define MQTT_SERVER "......"
+  #define MQTT_USER "......."
+  #define MQTT_PASSWORD "........"
+*/
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include "secrets.h"
 
-// Update these with values suitable for your network.
-
-const char* ssid = "......";
-const char* password = ".......";
-const char* mqtt_server = "........";
+#define DISPOSITIVO "enrique" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "cursocefire/wemos"  //raiz de la ruta donde va a publicar
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -24,18 +30,25 @@ int valueM = 0;
 
 const int relayPin = D1;
 
-const char* publish_10sec = "nodo1/dato10s";
-const char* publish_60sec = "nodo1/dato60s";
-const char* publish_reset = "nodo1/reset";
-const char* subs_led = "nodo1/led";
-const char* subs_rele = "nodo1/rele";
+//Topics
+String topic_root =  String(RAIZ) + "/" + String(DISPOSITIVO);
+String publish_10sec_string = topic_root + "/dato10s";
+const char* publish_10sec = publish_10sec_string.c_str();
+String publish_60sec_string = topic_root + "/dato60s";
+const char* publish_60sec = publish_60sec_string.c_str();
+String publish_reset_string = topic_root + "/reset";
+const char* publish_reset = publish_reset_string.c_str();
+String subs_led_string = topic_root + "/led";
+const char* subs_led = subs_led_string.c_str();
+String subs_rele_string = topic_root + "/rele";
+const char* subs_rele = subs_rele_string.c_str();
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   pinMode(relayPin, OUTPUT);
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
 }
 
@@ -88,7 +101,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (String(topic) == String(subs_rele)) {
     // Switch on the LED if an 1 was received as first character
     if ((char)payload[0] == '1') {
-      digitalWrite(relayPin, HIGH);   // Turn the Relay on 
+      digitalWrite(relayPin, HIGH);   // Turn the Relay on
     } else {
       digitalWrite(relayPin, LOW);  // Turn the Relay off
     }
@@ -101,9 +114,9 @@ void setup_wifi() {
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(SSID);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(SSID, PASSWORD);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -123,10 +136,10 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
-    //String clientId = "ESP8266Client-";
-    //clientId += String(random(0xffff), HEX);
+    String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
+    clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect("wemosd1mini....",".......","......")) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
