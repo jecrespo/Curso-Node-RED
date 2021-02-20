@@ -16,13 +16,22 @@
 */
 
 #include <ESP8266WiFi.h>
+#include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include "secrets.h"
+
 
 #define DISPOSITIVO "enrique" //Dispositivo que identifica al publicar en MQTT
 #define RAIZ "cursocefire/wemos"  //raiz de la ruta donde va a publicar
 
-WiFiClient espClient;
+// Fingerprint of the broker CA SHA-1
+// Verify the SHA1 fingerprint of the certificate returned matches this one.
+// If the server certificate changes, it will fail. If an array of 20 bytes are sent in, it is assumed they are the binary SHA1 values.
+// openssl x509 -in  mqttserver.crt -sha1 -noout -fingerprint
+// SHA-1 fingerprint enriquecrespo.com valid until viernes, 16 de abril de 2021
+const char* fingerprint = "20:9E:19:B1:22:05:FA:1E:77:45:86:22:F9:32:BB:A5:FD:43:15:9E";
+
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
 long lastMsg = 0;
 long lastMsgM = 0;
@@ -47,7 +56,9 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(MQTT_SERVER, 1883);
+  espClient.setFingerprint(fingerprint);
+  // Alternative: espClient.setInsecure;
+  client.setServer(MQTT_SERVER, 8883);
   client.setCallback(callback);
 
 }
