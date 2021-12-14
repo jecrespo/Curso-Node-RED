@@ -17,6 +17,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <WEMOS_DHT12.h>
+#include "secrets.h"
 
 #define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
 #define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar

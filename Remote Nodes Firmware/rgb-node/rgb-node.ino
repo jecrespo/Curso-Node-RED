@@ -16,6 +16,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <Adafruit_NeoPixel.h>
+#include "secrets.h"
 
 #define PIN   D4
 #define LED_NUM 7
