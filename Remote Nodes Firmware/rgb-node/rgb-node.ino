@@ -129,7 +129,7 @@ void setup_wifi() {
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(SSID);
 
   WiFi.begin(SSID, PASSWORD);
 
