@@ -25,6 +25,9 @@ DHTStable DHT;
 
 #define DHT12_PIN D4
 
+#define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 long lastMsg = 0;
@@ -35,14 +38,24 @@ int valueM = 0;
 
 const int relayPin = D1;
 
-const char* publish_temp = "casa/wemos1/temperatura";
-const char* publish_hum = "casa/wemos1/humedad";
-const char* publish_10sec = "casa/wemos1/dato10s";
-const char* publish_60sec = "casa/wemos1/dato60s";
-const char* publish_reset = "casa/wemos1/reset";
-const char* subs_led = "casa/wemos1/led"; //No funciona porque el pin led es el D4 usado por el shield DHT
-const char* subs_text = "casa/wemos1/text";
-const char* subs_rele = "casa/wemos1/rele";
+//Topics
+String topic_root =  String(RAIZ) + "/" + String(DISPOSITIVO);
+String publish_10sec_string = topic_root + "/dato10s";
+const char* publish_10sec = publish_10sec_string.c_str();
+String publish_60sec_string = topic_root + "/dato60s";
+const char* publish_60sec = publish_60sec_string.c_str();
+String publish_reset_string = topic_root + "/reset";
+const char* publish_reset = publish_reset_string.c_str();
+String subs_led_string = topic_root + "/led";
+const char* subs_led = subs_led_string.c_str();	//No funciona porque el pin led es el D4 usado por el shield DHT
+String publish_temp_string = topic_root + "/temp";
+const char* publish_temp = publish_temp_string.c_str();
+String publish_hum_string = topic_root + "/hum";
+const char* publish_hum = publish_hum_string.c_str();
+String subs_text_string = topic_root + "/text";
+const char* subs_text = subs_text_string.c_str();
+String subs_rele_string = topic_root + "/rele";
+const char* subs_rele = subs_rele_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output

@@ -5,6 +5,14 @@
    En cada reset publica un mensaje indicando que se ha reiniciado
 */
 
+/* secrets.h
+  #define SSID "......."
+  #define PASSWORD "......"
+  #define MQTT_SERVER "......"
+  #define MQTT_USER "......."
+  #define MQTT_PASSWORD "........"
+*/
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <Adafruit_NeoPixel.h>
@@ -12,13 +20,10 @@
 #define PIN   D4
 #define LED_NUM 7
 
+#define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar
+
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_NUM, PIN, NEO_GRB + NEO_KHZ800);
-
-// Update these with values suitable for your network.
-
-const char* ssid = "........";
-const char* password = "........";
-const char* mqtt_server = "broker.mqtt-dashboard.com";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -28,23 +33,36 @@ char msg[50];
 int value = 0;
 int valueM = 0;
 
-const char* publish_10sec = "nodo1/dato10s";
-const char* publish_60sec = "nodo1/dato60s";
-const char* publish_reset = "nodo1/reset";
-const char* subs_led = "nodo1/led";
-const char* subs_rgb1 = "nodo1/rgb1";
-const char* subs_rgb2 = "nodo1/rgb2";
-const char* subs_rgb3 = "nodo1/rgb3";
-const char* subs_rgb4 = "nodo1/rgb4";
-const char* subs_rgb5 = "nodo1/rgb5";
-const char* subs_rgb6 = "nodo1/rgb6";
-const char* subs_rgb7 = "nodo1/rgb7";
+//Topics
+String topic_root =  String(RAIZ) + "/" + String(DISPOSITIVO);
+String publish_10sec_string = topic_root + "/dato10s";
+const char* publish_10sec = publish_10sec_string.c_str();
+String publish_60sec_string = topic_root + "/dato60s";
+const char* publish_60sec = publish_60sec_string.c_str();
+String publish_reset_string = topic_root + "/reset";
+const char* publish_reset = publish_reset_string.c_str();
+String subs_led_string = topic_root + "/led";
+const char* subs_led = subs_led_string.c_str();
+String subs_rgb1_string = topic_root + "/rgb1";
+const char* subs_rgb1 = subs_rgb1_string.c_str();
+String subs_rgb2_string = topic_root + "/rgb2";
+const char* subs_rgb2 = subs_rgb2_string.c_str();
+String subs_rgb3_string = topic_root + "/rgb3";
+const char* subs_rgb3 = subs_rgb3_string.c_str();
+String subs_rgb4_string = topic_root + "/rgb4";
+const char* subs_rgb4 = subs_rgb4_string.c_str();
+String subs_rgb5_string = topic_root + "/rgb5";
+const char* subs_rgb5 = subs_rgb5_string.c_str();
+String subs_rgb6_string = topic_root + "/rgb6";
+const char* subs_rgb6 = subs_rgb6_string.c_str();
+String subs_rgb7_string = topic_root + "/rgb7";
+const char* subs_rgb7 = subs_rgb7_string.c_str();
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
 
   leds.begin();
@@ -112,7 +130,7 @@ void setup_wifi() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(SSID, PASSWORD);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -135,7 +153,7 @@ void reconnect() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str()), MQTT_USER, MQTT_PASSWORD) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");

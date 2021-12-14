@@ -6,17 +6,22 @@
    Instalar librería https://github.com/wemos/WEMOS_DHT12_Arduino_Library
 */
 
+/* secrets.h
+  #define SSID "......."
+  #define PASSWORD "......"
+  #define MQTT_SERVER "......"
+  #define MQTT_USER "......."
+  #define MQTT_PASSWORD "........"
+*/
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <WEMOS_DHT12.h>
 
+#define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar
+
 DHT12 dht12;
-
-// Update these with values suitable for your network.
-
-const char* ssid = "........";
-const char* password = "........";
-const char* mqtt_server = "broker.mqtt-dashboard.com";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -26,17 +31,26 @@ char msg[50];
 int value = 0;
 int valueM = 0;
 
-const char* publish_temp = "nodo1/temp";
-const char* publish_60sec = "nodo1/dato60s";
-const char* publish_reset = "nodo1/reset";
-const char* subs_led = "nodo1/led";
-const char* subs_text = "nodo1/text";
+//Topics
+String topic_root =  String(RAIZ) + "/" + String(DISPOSITIVO);
+String publish_10sec_string = topic_root + "/dato10s";
+const char* publish_10sec = publish_10sec_string.c_str();
+String publish_60sec_string = topic_root + "/dato60s";
+const char* publish_60sec = publish_60sec_string.c_str();
+String publish_reset_string = topic_root + "/reset";
+const char* publish_reset = publish_reset_string.c_str();
+String subs_led_string = topic_root + "/led";
+const char* subs_led = subs_led_string.c_str();
+String publish_temp_string = topic_root + "/temp";
+const char* publish_temp = publish_temp_string.c_str();
+String subs_text_string = topic_root + "/text";
+const char* subs_text = subs_text_string.c_str();
 
 void setup() {
   pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
   setup_wifi();
-  client.setServer(mqtt_server, 1883);
+  client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
 
 }
@@ -49,6 +63,12 @@ void loop() {
 
   long now = millis();
   if (now - lastMsg > 10000) {
+	lastMsg = now;
+    ++value;
+    snprintf (msg, 50, "hello world 10s #%ld", value);
+    Serial.print("Publish message: ");
+    Serial.println(msg);
+    client.publish(publish_10sec, msg);
     if (dht12.get() == 0) {
       Serial.print("Temperature in Celsius : ");
       Serial.println(dht12.cTemp);
@@ -102,9 +122,9 @@ void setup_wifi() {
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(SSID);
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(SSID, PASSWORD);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -127,7 +147,7 @@ void reconnect() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str()),MQTT_USER, MQTT_PASSWORD) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
