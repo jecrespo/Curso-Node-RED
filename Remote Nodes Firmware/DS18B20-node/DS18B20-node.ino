@@ -21,8 +21,8 @@
 #include <DS18B20.h>
 #include "secrets.h"
 
-#define DISPOSITIVO "enrique" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "cursocefire/wemos"  //raiz de la ruta donde va a publicar
+#define DISPOSITIVO "nodods18b20" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "casa"  //raiz de la ruta donde va a publicar
 
 DS18B20 ds(D2);
 
@@ -46,6 +46,8 @@ String publish_reset_string = topic_root + "/reset";
 const char* publish_reset = publish_reset_string.c_str();
 String subs_led_string = topic_root + "/led";
 const char* subs_led = subs_led_string.c_str();
+String lwt_topic_string = topic_root + "/status";
+const char* lwt_topic = subs_led_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
@@ -74,7 +76,7 @@ void loop() {
     while (ds.selectNext()) {
       snprintf (msg, 50, "%3.2f", ds.getTempC());
       Serial.println(msg);
-      client.publish(publish_temperatura, msg);
+      client.publish(publish_temperatura, msg, true);
     }
   }
 
@@ -140,7 +142,7 @@ void reconnect() {
     String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");

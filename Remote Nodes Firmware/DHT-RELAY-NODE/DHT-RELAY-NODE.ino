@@ -25,8 +25,8 @@ DHTStable DHT;
 
 #define DHT12_PIN D4
 
-#define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar
+#define DISPOSITIVO "nododht1" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "casa"  //raiz de la ruta donde va a publicar
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -56,6 +56,8 @@ String subs_text_string = topic_root + "/text";
 const char* subs_text = subs_text_string.c_str();
 String subs_rele_string = topic_root + "/rele";
 const char* subs_rele = subs_rele_string.c_str();
+String lwt_topic_string = topic_root + "/status";
+const char* lwt_topic = subs_rele_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
@@ -79,7 +81,7 @@ void loop() {
     snprintf (msg, 50, "hello world 10s #%d", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_10sec, msg);
+    client.publish(publish_10sec, msg, true);
     int chk = DHT.read12(DHT12_PIN);
     if (chk == DHTLIB_OK) {
       Serial.print("Temperature in Celsius : ");
@@ -90,10 +92,10 @@ void loop() {
       Serial.println("Publish T&H messages...");
       int valueT = DHT.getTemperature();
       snprintf (msg, 50, "%d", valueT);
-      client.publish(publish_temp, msg);
+      client.publish(publish_temp, msg, true);
       int valueH = DHT.getHumidity();
       snprintf (msg, 50, "%d", valueH);
-      client.publish(publish_hum, msg);
+      client.publish(publish_hum, msg, true);
     }
   }
 
@@ -103,7 +105,7 @@ void loop() {
     snprintf (msg, 50, "hello world 60s #%d", valueM);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_60sec, msg);
+    client.publish(publish_60sec, msg, true);
   }
 }
 
@@ -168,7 +170,7 @@ void reconnect() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");

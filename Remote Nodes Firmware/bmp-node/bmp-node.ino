@@ -29,11 +29,12 @@ char msg[50];
 String m = "";
 
 //topics mqtt
-const char* publish_temp = "cursocefire/nodo1/temp";
-const char* publish_pres = "cursocefire/nodo1/pres";
-const char* publish_reset = "cursocefire/nodo1/reset";
-const char* subs_led = "cursocefire/nodo1/led";
-const char* subs_text = "cursocefire/nodo1/text";
+const char* publish_temp = "casa/nodobmp1/temp";
+const char* publish_pres = "casa/nodobmp1/pres";
+const char* publish_reset = "casa/nodobmp1/reset";
+const char* subs_led = "casa/nodobmp1/led";
+const char* subs_text = "casa/nodobmp1/text";
+const char* lwt_topic = "casa/nodobmp1/status";
 
 //0x31
 #define OLED_RESET -1
@@ -100,12 +101,12 @@ void loop()
     Serial.print("Publish message Temperature: ");
     snprintf (msg, 50, "%4.2f", t);
     Serial.println(msg);
-    client.publish(publish_temp, msg);
+    client.publish(publish_temp, msg, true);
 
     Serial.print("Publish message Pressure: ");
     snprintf (msg, 50, "%i", p);
     Serial.println(msg);
-    client.publish(publish_pres, msg);
+    client.publish(publish_pres, msg, true);
   }
 }
 
@@ -169,7 +170,7 @@ void reconnect() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
