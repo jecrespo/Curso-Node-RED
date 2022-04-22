@@ -21,8 +21,8 @@
 #define PIN   D4
 #define LED_NUM 7
 
-#define DISPOSITIVO "nodo00" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "nrdeveloper"  //raiz de la ruta donde va a publicar
+#define DISPOSITIVO "nodorgb2" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
 
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_NUM, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -56,17 +56,24 @@ String subs_rgb5_string = topic_root + "/rgb5";
 const char* subs_rgb5 = subs_rgb5_string.c_str();
 String subs_rgb6_string = topic_root + "/rgb6";
 const char* subs_rgb6 = subs_rgb6_string.c_str();
-String subs_rgb7_string = topic_root + "/rgb7";
-const char* subs_rgb7 = subs_rgb7_string.c_str();
+String subs_rgb0_string = topic_root + "/rgb0";
+const char* subs_rgb0 = subs_rgb0_string.c_str();
+String lwt_topic_string = topic_root + "/status";
+const char* lwt_topic = lwt_topic_string.c_str();
 
 void setup() {
-  pinMode(BUILTIN_LED, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
   Serial.begin(115200);
   setup_wifi();
   client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
 
   leds.begin();
+
+  for (int i = 0; i < 7; i++) {
+    leds.setPixelColor(i, 0, 0, 0);
+  }
+  leds.show();
 }
 
 void loop() {
@@ -82,7 +89,7 @@ void loop() {
     snprintf (msg, 50, "hello world 10s #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_10sec, msg);
+    client.publish(publish_10sec, msg, true);
   }
 
   if (now - lastMsgM > 60000) {
@@ -91,7 +98,7 @@ void loop() {
     snprintf (msg, 50, "hello world 60s #%ld", valueM);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_60sec, msg);
+    client.publish(publish_60sec, msg, true);
   }
 }
 
@@ -99,15 +106,20 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+  String texto = "";
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
+    texto += (char)payload[i];
   }
   Serial.println();
 
-  if (String(topic).startsWith(String(subs_led).substring(-1))) { //Si comienza por el el topic de los leds
-    int led = (String(topic).substring(String(subs_led).length() - 1)).toInt();
+  if (String(topic).startsWith(String(subs_rgb1_string).substring(-1))) { //Si comienza por el el topic de los leds
+    int led = (String(topic).substring(String(subs_rgb1_string).length() - 1)).toInt();
     //payload debe tener el formato color is a 32-bit type that merges the red, green and blue values into a single number
-    leds.setPixelColor(led, int(payload));
+    Serial.println(String(topic));
+    Serial.println(led);
+    Serial.println(texto.toInt());
+    leds.setPixelColor(led, texto.toInt(), texto.toInt(), texto.toInt());
     leds.show();
   }
 
@@ -151,10 +163,10 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
-    String clientId = "ESP8266Client-";
+    String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str()), MQTT_USER, MQTT_PASSWORD) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
@@ -166,7 +178,7 @@ void reconnect() {
       client.subscribe(subs_rgb4);
       client.subscribe(subs_rgb5);
       client.subscribe(subs_rgb6);
-      client.subscribe(subs_rgb7);
+      client.subscribe(subs_rgb0);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());

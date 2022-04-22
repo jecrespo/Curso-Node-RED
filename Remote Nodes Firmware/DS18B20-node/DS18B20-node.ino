@@ -47,7 +47,7 @@ const char* publish_reset = publish_reset_string.c_str();
 String subs_led_string = topic_root + "/led";
 const char* subs_led = subs_led_string.c_str();
 String lwt_topic_string = topic_root + "/status";
-const char* lwt_topic = subs_led_string.c_str();
+const char* lwt_topic = lwt_topic_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output

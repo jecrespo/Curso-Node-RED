@@ -57,7 +57,7 @@ const char* subs_text = subs_text_string.c_str();
 String subs_rele_string = topic_root + "/rele";
 const char* subs_rele = subs_rele_string.c_str();
 String lwt_topic_string = topic_root + "/status";
-const char* lwt_topic = subs_rele_string.c_str();
+const char* lwt_topic = lwt_topic_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output

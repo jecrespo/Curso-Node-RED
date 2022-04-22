@@ -26,8 +26,8 @@
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
 
-#define DISPOSITIVO "enrique" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "cursocefire/wemos"  //raiz de la ruta donde va a publicar
+#define DISPOSITIVO "nodooled1" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -49,6 +49,8 @@ String subs_led_string = topic_root + "/led";
 const char* subs_led = subs_led_string.c_str();
 String subs_oled_string = topic_root + "/oled";
 const char* subs_oled = subs_oled_string.c_str();
+String lwt_topic_string = topic_root + "/status";
+const char* lwt_topic = lwt_topic_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
@@ -81,7 +83,7 @@ void loop() {
     snprintf (msg, 50, "hello world 10s #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_10sec, msg);
+    client.publish(publish_10sec, msg, true);
   }
 
   if (now - lastMsgM > 60000) {
@@ -90,7 +92,7 @@ void loop() {
     snprintf (msg, 50, "hello world 60s #%ld", valueM);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_60sec, msg);
+    client.publish(publish_60sec, msg, true);
   }
 }
 
@@ -157,7 +159,7 @@ void reconnect() {
     String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD)) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
