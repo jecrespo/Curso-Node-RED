@@ -4,6 +4,9 @@
    Publica cada 10 segundos la temperatura de la sonda DS18B20
    Está suscrito a un topic que enciende y apaga el led integrado de ESP8266
    En cada reset publica un mensaje indicando que se ha reiniciado
+   Librerías DS18B20:
+   - OneWire: https://www.pjrc.com/teensy/td_libs_OneWire.html
+   - Dallas Temperature: https://github.com/milesburton/Arduino-Temperature-Control-Library
 */
 
 /* secrets.h
@@ -18,13 +21,21 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include <DS18B20.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include "secrets.h"
 
 #define DISPOSITIVO "nodods18b20" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "casa"  //raiz de la ruta donde va a publicar
+#define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
 
-DS18B20 ds(D2);
+// GPIO where the DS18B20 is connected to
+const int oneWireBus = D2;
+
+// Setup a oneWire instance to communicate with any OneWire devices
+OneWire oneWire(oneWireBus);
+
+// Pass our oneWire reference to Dallas Temperature sensor
+DallasTemperature sensors(&oneWire);
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -55,7 +66,7 @@ void setup() {
   setup_wifi();
   client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
-
+  sensors.begin();
 }
 
 void loop() {
@@ -72,12 +83,12 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish(publish_10sec, msg);
-    
-    while (ds.selectNext()) {
-      snprintf (msg, 50, "%3.2f", ds.getTempC());
-      Serial.println(msg);
-      client.publish(publish_temperatura, msg, true);
-    }
+
+    //Read Temperature
+    sensors.requestTemperatures();
+    snprintf (msg, 50, "%3.2f", sensors.getTempCByIndex(0));
+    Serial.println(msg);
+    client.publish(publish_temperatura, msg);
   }
 
   if (now - lastMsgM > 60000) {
@@ -140,12 +151,14 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
     String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
-    clientId += String(random(0xffff), HEX);
+    //clientId += String(random(0xffff), HEX);
+    clientId += DISPOSITIVO;
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, true, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
+      client.publish(lwt_topic, "OK", true);
       // ... and resubscribe
       client.subscribe(subs_led);
     } else {

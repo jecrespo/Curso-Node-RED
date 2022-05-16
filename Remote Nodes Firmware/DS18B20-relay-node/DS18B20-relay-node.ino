@@ -1,9 +1,8 @@
 /*
-   Ejemplo de nodo remoto para interacción con MQTT y Node-RED con Wemos D1 Mini +  Oled Relay: https://wiki.wemos.cc/products:d1_mini_shields:oled_shield
+   Ejemplo de nodo remoto para interacción con MQTT y Node-RED con Wemos D1 Mini +  Shield Relay: https://wiki.wemos.cc/products:d1_mini_shields:relay_shield
    Publica en un topic cada 10 segundos y en otro cada 60 segundos
-   Está suscrito a dos topic, uno de ellos enciende y apaga el led integrado de ESP8266 y el otro muestra en pantalla el mensaje
+   Está suscrito a dos topic, uno de ellos enciende y apaga el led integrado de ESP8266 y el otro enciende y apaga el relé
    En cada reset publica un mensaje indicando que se ha reiniciado
-   Instalar librería https://github.com/stblassitude/Adafruit_SSD1306_Wemos_OLED
 */
 
 /* secrets.h
@@ -16,18 +15,21 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include "secrets.h"
 
-// Update these with values suitable for your network.
-
-#define OLED_RESET -1
-Adafruit_SSD1306 display(OLED_RESET);
-
-#define DISPOSITIVO "nodooled1" //Dispositivo que identifica al publicar en MQTT
+#define DISPOSITIVO "nodoreletemp1" //Dispositivo que identifica al publicar en MQTT
 #define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
+
+// GPIO where the DS18B20 is connected to
+const int oneWireBus = D2;
+
+// Setup a oneWire instance to communicate with any OneWire devices
+OneWire oneWire(oneWireBus);
+
+// Pass our oneWire reference to Dallas Temperature sensor
+DallasTemperature sensors(&oneWire);
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -36,6 +38,8 @@ long lastMsgM = 0;
 char msg[50];
 int value = 0;
 int valueM = 0;
+
+const int relayPin = D1;
 
 //Topics
 String topic_root =  String(RAIZ) + "/" + String(DISPOSITIVO);
@@ -47,24 +51,17 @@ String publish_reset_string = topic_root + "/reset";
 const char* publish_reset = publish_reset_string.c_str();
 String subs_led_string = topic_root + "/led";
 const char* subs_led = subs_led_string.c_str();
-String subs_oled_string = topic_root + "/oled";
-const char* subs_oled = subs_oled_string.c_str();
+String subs_rele_string = topic_root + "/rele";
+const char* subs_rele = subs_rele_string.c_str();
 String lwt_topic_string = topic_root + "/status";
 const char* lwt_topic = lwt_topic_string.c_str();
+String publish_temperatura_string = topic_root + "/temperatura";
+const char* publish_temperatura = publish_temperatura_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  pinMode(relayPin, OUTPUT);
   Serial.begin(115200);
-
-  //display config
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE);
-  display.println("Init");
-  display.println();
-  display.display();
-
   setup_wifi();
   client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
@@ -84,6 +81,12 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish(publish_10sec, msg);
+
+    //Read Temperature
+    sensors.requestTemperatures();
+    snprintf (msg, 50, "%3.2f", sensors.getTempCByIndex(0));
+    Serial.println(msg);
+    client.publish(publish_temperatura, msg);
   }
 
   if (now - lastMsgM > 60000) {
@@ -100,10 +103,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
-  String texto = "";
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
-    texto += (char)payload[i];
   }
   Serial.println();
 
@@ -118,13 +119,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
   }
 
-  if (String(topic) == String(subs_oled)) {
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.setCursor(0, 0);
-    display.println(texto);
-    display.display();
+  if (String(topic) == String(subs_rele)) {
+    // Switch on the LED if an 1 was received as first character
+    if ((char)payload[0] == '1') {
+      digitalWrite(relayPin, HIGH);   // Turn the Relay on
+    } else {
+      digitalWrite(relayPin, LOW);  // Turn the Relay off
+    }
   }
 }
 
@@ -167,7 +168,7 @@ void reconnect() {
       client.publish(lwt_topic, "OK", true);
       // ... and resubscribe
       client.subscribe(subs_led);
-      client.subscribe(subs_oled);
+      client.subscribe(subs_rele);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());

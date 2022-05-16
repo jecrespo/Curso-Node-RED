@@ -25,8 +25,8 @@ DHTStable DHT;
 
 #define DHT12_PIN D4
 
-#define DISPOSITIVO "nododht1" //Dispositivo que identifica al publicar en MQTT
-#define RAIZ "casa"  //raiz de la ruta donde va a publicar
+#define DISPOSITIVO "enrique/nododhtrele1" //Dispositivo que identifica al publicar en MQTT
+#define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -168,12 +168,14 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
     String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
+    //clientId += String(random(0xffff), HEX);
+    clientId += DISPOSITIVO;
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, true, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
+      client.publish(lwt_topic, "OK", true);
       // ... and resubscribe
       client.subscribe(subs_led);
       client.subscribe(subs_text);

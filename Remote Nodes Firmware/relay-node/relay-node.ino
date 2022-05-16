@@ -67,7 +67,7 @@ void loop() {
     snprintf (msg, 50, "hello world 10s #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_10sec, msg, true);
+    client.publish(publish_10sec, msg);
   }
 
   if (now - lastMsgM > 60000) {
@@ -76,7 +76,7 @@ void loop() {
     snprintf (msg, 50, "hello world 60s #%ld", valueM);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish(publish_60sec, msg, true);
+    client.publish(publish_60sec, msg);
   }
 }
 
@@ -139,12 +139,14 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     // Create a random client ID
     String clientId = "ESP8266-" + String(DISPOSITIVO) + "-";
-    clientId += String(random(0xffff), HEX);
+    //clientId += String(random(0xffff), HEX);
+    clientId += DISPOSITIVO;
     // Attempt to connect
-    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, false, "KO")) {
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD, lwt_topic, 2, true, "KO")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish(publish_reset, "reset");
+      client.publish(lwt_topic, "OK", true);
       // ... and resubscribe
       client.subscribe(subs_led);
       client.subscribe(subs_rele);

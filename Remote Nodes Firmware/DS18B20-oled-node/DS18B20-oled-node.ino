@@ -4,6 +4,9 @@
    Está suscrito a dos topic, uno de ellos enciende y apaga el led integrado de ESP8266 y el otro muestra en pantalla el mensaje
    En cada reset publica un mensaje indicando que se ha reiniciado
    Instalar librería https://github.com/stblassitude/Adafruit_SSD1306_Wemos_OLED
+   Librerías DS18B20:
+   - OneWire: https://www.pjrc.com/teensy/td_libs_OneWire.html
+   - Dallas Temperature: https://github.com/milesburton/Arduino-Temperature-Control-Library
 */
 
 /* secrets.h
@@ -19,6 +22,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include "secrets.h"
 
 // Update these with values suitable for your network.
@@ -26,8 +31,17 @@
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
 
-#define DISPOSITIVO "nodooled1" //Dispositivo que identifica al publicar en MQTT
+#define DISPOSITIVO "nodooledtemp1" //Dispositivo que identifica al publicar en MQTT
 #define RAIZ "cursomqtt"  //raiz de la ruta donde va a publicar
+
+// GPIO where the DS18B20 is connected to
+const int oneWireBus = D2;
+
+// Setup a oneWire instance to communicate with any OneWire devices
+OneWire oneWire(oneWireBus);
+
+// Pass our oneWire reference to Dallas Temperature sensor
+DallasTemperature sensors(&oneWire);
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -51,6 +65,8 @@ String subs_oled_string = topic_root + "/oled";
 const char* subs_oled = subs_oled_string.c_str();
 String lwt_topic_string = topic_root + "/status";
 const char* lwt_topic = lwt_topic_string.c_str();
+String publish_temperatura_string = topic_root + "/temperatura";
+const char* publish_temperatura = publish_temperatura_string.c_str();
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
@@ -68,6 +84,8 @@ void setup() {
   setup_wifi();
   client.setServer(MQTT_SERVER, 1883);
   client.setCallback(callback);
+
+  sensors.begin();
 }
 
 void loop() {
@@ -93,6 +111,12 @@ void loop() {
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish(publish_60sec, msg);
+
+    //Read Temperature
+    sensors.requestTemperatures();
+    snprintf (msg, 50, "%3.2f", sensors.getTempCByIndex(0));
+    Serial.println(msg);
+    client.publish(publish_temperatura, msg);
   }
 }
 
